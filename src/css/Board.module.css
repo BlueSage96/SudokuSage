@@ -1,13 +1,23 @@
+.StatsBar {
+    display: flex;
+    justify-content: space-around;
+    font-size: 20px;
+    line-height: 28px;
+    width: 40%;
+}
+
 .Main {
     display: flex;
     flex-direction: column;
     background-color: white;
-    border: 6px solid white;
+    border: 8px solid white;
     border-radius: 8px;
     width: 100%;
-    /* height: 345px; */
+    max-width: 700px; 
+    /* justify-content: center;
+    align-items: center; */
     padding: 0;
-    margin: 0;
+    margin: 0 auto; 
     gap: 6px;
 }
 
@@ -18,10 +28,111 @@
     height: 100%;
 }
 
+.PauseOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(30, 40, 200, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    pointer-events: auto;
+}
+
+.PauseDialog {
+    background-color: rgb(30,40,200);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    padding: 2rem 4rem;
+    border: 2px solid white;
+    border-radius: 16px;
+    font-size: 40px;
+    font-weight: bold;
+    box-shadow: 0 0 2px rgba(0,0,0,0.4);
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.MistakesOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(30,40,200,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    pointer-events: auto;
+}
+
+.MistakesDialog {
+    color: white;
+    background-color: rgb(30,40,200);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding: 16px 32px;
+    border: 2px solid white;
+    border-radius: 16px;
+    font-size: 40px;
+    font-weight: bold;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+    pointer-events: auto;
+}
+
+button {
+    margin: 4px 8px;
+}
+
+.Restart, .TryAgain {
+    font-size: 25px;
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+    border-radius: 8px;
+    padding: 8px;
+    position: relative;
+    bottom: 3px;
+}
+
+.NumContainer {
+    display: flex;
+    justify-content: space-around;
+    user-select: none;
+    width: 40%;
+}
+
+.NumRow {
+    color: white;
+    font-size: 24px;
+    background-color: rgb(30, 40, 200);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); 
+    padding: 8px 16px;
+    margin: 20px 0;
+    outline: 1px solid white;
+    border-radius: 6px;
+    line-height: 32px;
+    cursor: pointer;
+}
+
+.NumRow:hover {
+    outline: 3px solid white;
+}
+
 @media (min-width: 768px) {
     .Main {
-        width: 700px;
-        height: 700px;
+        width: 685px;
+        height: 685px;
         padding: 0;
     }
 }

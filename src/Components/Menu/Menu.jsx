@@ -5,6 +5,7 @@ import MenuButtonStyles from 'styled-components';
 import BG from '../../assets/background.png';
 import Start from '../../assets/start.png';
 import Resume from '../../assets/resume.png';
+import { gameState } from '../../Store/GameState';
 
 const Buttons = MenuButtonStyles.button`
   background: none;
@@ -27,15 +28,19 @@ const Selection = MenuButtonStyles.select`
 `;
 
 function Menu() {
+  const { startGame, resumeGame } = gameState();
   const modeRef = useRef();
   const navigate = useNavigate();
 
   function handleStart() {
+    startGame(modeRef.current.value);
+    localStorage.setItem('mode', modeRef.current.value);
     navigate('/game');
   }
 
   function handleResume() {
-    console.log('Will add later');
+    resumeGame();
+    navigate('/game');
   }
 
   return (
