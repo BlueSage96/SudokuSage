@@ -14,14 +14,17 @@ const Apps = AppStyles.div`
 `;
 
 function App() {
-
+  const location = useLocation();
+  const isAuth = location.pathname.startsWith("/auth");
   return (
     <>
-      <Apps>
+    {isAuth ? (<Auth/>) : (
+        <Apps>
         <Outlet></Outlet>
       </Apps>
+      )}  
     </>
   )
 }
 
-export default App
+export default App;

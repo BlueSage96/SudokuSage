@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthStyles from "../css/Auth.module.css";
-// import LogReg from "./LoginRegister/LoginRegister";
-// import Register from "./LoginRegister/Register";
-// import Login from "./LoginRegister/Login";
-// import { ShowGames, HandleEditGames, HandleDeleteGames } from "./Games/GameFunc";
+import LogReg from "./LoginRegister/LoginRegister";
+import Register from "./LoginRegister/Register";
+import Login from "./LoginRegister/Login";
+import { ShowGames, HandleEditGames, HandleDeleteGames } from "./Games/GameFunc";
 
 export default function Auth () {
     const [message, setMessage] = useState(null);
