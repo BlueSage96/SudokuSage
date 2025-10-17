@@ -1,0 +1,71 @@
+.Title {
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: 90vh;
+    z-index: -1;
+    border: 8px solid white;
+    border-radius: 8px;
+}
+
+.Options {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.Settings, .Controls, .Inst, .SignIn, .Start, .Resume {
+    border-radius: 8px;
+    padding: 8px;
+    position: absolute;
+}
+
+.Settings {
+    width: 115px;
+    left: 640px;
+    bottom: 100px;
+}
+
+.Controls {
+    width: 115px;
+    left: 770px;
+    bottom: 100px;
+}
+
+.Inst {
+    width: 130px;
+    height: 45px;
+    right: 715px;
+    bottom: 100px;
+}
+
+.SignIn {
+    width: 55px;
+    right: 650px;
+    bottom: 95px;
+}
+
+/* .Start {
+    width: 100px;
+    height: 60px;
+    bottom: 95px;
+    left: 650px;
+}
+
+.Resume {
+    width: 160px;
+    bottom: 95px;
+    left: 760px;
+}
+
+.Start:hover, .Resume:hover {
+    cursor: pointer;
+}
+
+.Start:active, .Resume:active {
+    transform: scale(0.75);
+} */

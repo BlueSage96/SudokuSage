@@ -1,0 +1,166 @@
+.LogReg {
+  display: flex;
+  position: relative;
+  right: 175px;
+}
+
+.LoginDiv, .RegisterDiv {
+    padding: 2px 2px;
+    margin: 4px 4px;
+    position: relative;
+} 
+
+.LoginDiv {
+   top: -35px;
+   left: 50px;
+}
+
+.RegisterDiv {
+   top: 5px;
+   left: 100px;
+}
+
+.EmailTxt, .PwdTxt {
+   position: relative;
+}
+
+input {
+  background-color: black;
+  border: 1px solid white;
+  border-radius: 4px;
+  margin: 2px 8px;
+}
+
+label, input {
+    display: flex;
+    align-items: center;
+    position: relative;
+    right: 5px;
+    top: -40px; 
+}
+
+ .RegBtn, .RegCancel, .LGRegBtn, .LoginBtn, .LoginCancel, .RGLoginBtn{
+    background-color: black;
+    border: 1px solid white;
+    border-radius: 8px;
+    padding: 4px;
+    margin: 8px;
+    font-size: 20px;
+    position: relative;
+}
+
+ .RGLoginBtn, .LGRegBtn {
+   top: -25px;
+   font-size: 30px;
+}
+
+.LoginBtn, .LoginCancel {
+   right: 10px;
+}
+
+.RegBtn, .RegCancel {
+   right: 15px;
+}
+
+@media screen and (min-width: 700px) and (max-width: 800px) {
+  .LogReg {
+     right: 175px;
+  }
+
+  .RegisterDiv {
+    right: 125px;
+    top: 20px;
+  }
+
+  .RegBtn, .RegCancel {
+    bottom: 30px;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 700px) {
+  .LogReg {
+    right: 175px;
+  }
+
+  .RegisterDiv {
+    right: 100px;
+    top: 20px;
+  }
+
+  .RegBtn, .RegCancel {
+    bottom: 30px;
+  }
+}
+
+@media screen and (min-width: 500px) and (max-width: 600px) {
+  .LogReg {
+    right: 170px;
+  }
+
+  .LoginDiv {
+    right: 100px;
+  }
+
+  .RegisterDiv {
+    left: 90px;
+    top: 20px;
+  }
+
+  .RegBtn, .RegCancel {
+    bottom: 30px;
+  }
+}
+
+@media screen and (min-width: 400px) and (max-width: 500px) {
+  label, input {
+    left: 60px;
+    top: -40px;
+  }
+
+  .LogReg {
+      right: 140px;
+  }
+
+  .LoginDiv {
+    left: -5px;
+  }
+
+  .LoginBtn, .LoginCancel {
+    left: 55px;
+  }
+
+  .RegisterDiv {
+    left: 15px;
+  }
+
+  .RegBtn, .RegCancel {
+    left: 45px;
+  }
+}
+
+@media screen and (min-width: 300px) and (max-width: 400px) {
+  label, input {
+    left: 50px;
+    top: -40px;
+  }
+
+  .LogReg {
+    right: 130px;
+  }
+
+  .LoginDiv {
+     left: 0;
+  }
+
+  .LoginBtn, .LoginCancel {
+   left: 50px;
+  }
+
+  .RegisterDiv {
+    left: -5px;
+  }
+
+  .RegBtn, .RegCancel {
+    left: 30px;
+  }
+}
