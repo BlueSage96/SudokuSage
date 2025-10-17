@@ -1,6 +1,6 @@
 import './css/App.css';
 import { Outlet, useLocation } from 'react-router-dom';
-
+import Auth from "./Auth/Auth";
 import AppStyles from "styled-components";
 
 const Apps = AppStyles.div`

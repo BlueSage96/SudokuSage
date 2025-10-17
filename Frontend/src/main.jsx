@@ -13,7 +13,7 @@ import Menu from "./Components/Pages/Menu";
 // import Settings from "./Components/Pages/Settings";
 // import Controls from "./Components/Pages/Controls";
 // import Instructions from "./Components/Pages/Instructions";
-// import Auth from "./Auth/Auth";
+import Auth from "./Auth/Auth";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -22,8 +22,8 @@ const routes = createBrowserRouter(
       <Route path="/game" element={<Game />} />
       {/* <Route path="/settings" element={<Settings />} />
       <Route path="/controls" element={<Controls />} />
-      <Route path="/instructions" element={<Instructions />} />
-      <Route path="/auth" element={<Auth />} /> */}
+      <Route path="/instructions" element={<Instructions />} /> */}
+      <Route path="/auth" element={<Auth />} />
     </Route>
   )
 );
