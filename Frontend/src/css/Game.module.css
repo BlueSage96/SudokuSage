@@ -1,0 +1,130 @@
+.backButton { 
+    position: absolute;
+    font-size: 20px;
+    left: 420px; 
+    top: 70px;
+    background-color: rgb(30,40,200);
+    border: 2px solid white;
+    border-radius: 8px;
+    padding: 8px;
+  }
+
+  .Container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    width: 100vw;  
+    padding: 20px; 
+    box-sizing: border-box; 
+}
+
+/* .ButtonDiv {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+} */
+
+.pencilActive, .eraserActive {
+    color: green;
+}
+
+.Hints {
+    display: flex;
+    color: white;
+    border: 1px solid white;
+    border-radius: 25px;
+    background-color: rgb(30,40,200);
+    position: absolute;
+    top: 880px;
+    right: 640px;
+    width: 24px;
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    line-height: 28px;
+}
+
+/* .ButtonDiv {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+.Exit, .Pause, .Undo, .Reset, .Redo, .Eraser, .Pencil, .Bulb {
+    background-color: rgb(30,40,200);
+    border-radius: 8px;
+    padding: 6px;
+    margin: 8px;
+}
+
+
+.Exit:hover, .Pause:hover, .Undo:hover, .Reset:hover, .Redo:hover, .Eraser:hover, .Pencil:hover, .Bulb:hover { 
+    background-color: black;
+    outline: 2px solid white;
+}
+
+
+.Exit:active, .Pause:active, .Undo:active, .Reset:active, .Redo:active, .Eraser:active, .Pencil:active, .Bulb:active {
+    scale: 90%;
+} */
+
+@media screen and (min-width: 1600px) and (max-width: 1700px){
+  .backButton {
+    left: 350px;
+  }
+}
+
+@media screen and (min-width: 1500px) and (max-width: 1600px){
+  .backButton {
+    left: 300px;
+  }
+}
+
+@media screen and (min-width: 1400px) and (max-width: 1500px){
+  .backButton {
+    left: 250px;
+  }
+}
+
+@media screen and (min-width: 1300px) and (max-width: 1400px){
+  .backButton {
+    left: 200px;
+  }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1300px){
+  .backButton {
+    left: 150px;
+  }
+}
+
+@media screen and (min-width: 1100px) and (max-width: 1200px){
+  .backButton {
+    left: 100px;
+  }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1100px){
+  .backButton {
+    left: 50px;
+  }
+}
+
+@media screen and (min-width: 900px) and (max-width: 1000px){
+  .backButton {
+    left: 25px;
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 900px){
+  .backButton {
+    left: 0;
+    font-size: 10px;
+  }
+}
