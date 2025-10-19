@@ -18,7 +18,6 @@
     position: relative;
     left: 400px;
     top: 100px;
-    /* display: grid */
     max-width: 600px;
     min-width: 400px;
     max-height: 700px;
@@ -242,6 +241,14 @@ td {
         font-size: 26px;
         left: 0;
     }
+
+    .GameTitle {
+        left: 300px;
+    }
+    .GameMsg {
+        bottom: 215px;
+        left: 50px;
+    }
 }
 
 @media screen and (min-width: 300px) and (max-width: 400px) {
@@ -281,11 +288,11 @@ td {
 
     .GameTitle {
         font-size: 24px;
-        right: 15px;
+        left: 275px;
     }
 
     .GameMsg {
         font-size: 14px;
-        right: 17px;
+        left: 70px;
     }
 }

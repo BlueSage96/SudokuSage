@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import GFStyles from "../../css/GameFunc.module.css";
 import api from "../Axios.js";
+import Logout from "../LogReg/Logout";
 
-export function ShowGames({ enableInput, setDiv, token, handleToken, setMessage, setEditGameId }) {
+export function ShowGames({ inputEnabled,enableInput, setDiv, token, handleToken, setMessage, setEditGameId }) {
   const [games, setGames] = useState([]);
   let gamesTableRef = useRef();
   let gamesTableHeadRef = useRef();
@@ -112,7 +113,7 @@ export function ShowGames({ enableInput, setDiv, token, handleToken, setMessage,
     <>
       <p className={GFStyles.GameMsg}></p>
       <div className={GFStyles.GamesTableContainer}>
-          <table className={GFStyles.GamesTable} ref={gamesTableRef}>
+        <table className={GFStyles.GamesTable} ref={gamesTableRef}>
           <thead>
             <tr className={GFStyles.GamesTableHeader} ref={gamesTableHeadRef}>
               <th>Difficulty</th>
@@ -136,20 +137,28 @@ export function ShowGames({ enableInput, setDiv, token, handleToken, setMessage,
                   <td>{game.status}</td>
                   <td>
                     {/* add onClick editGames copy & paste from above!! */}
-                    <button type="button" className={GFStyles.EditBtnTB} onClick={() => {
+                    <button
+                      type="button"
+                      className={GFStyles.EditBtnTB}
+                      onClick={() => {
                         setEditGameId(game._id);
-                        setTimeout(() => setDiv("edit"),0);
-                      }}>
+                        setTimeout(() => setDiv("edit"), 0);
+                      }}
+                    >
                       {" "}
                       edit{" "}
                     </button>
                   </td>
                   {/* change to dlt at certain screen sizes!! 500-600px */}
                   <td>
-                    <button type="button" className={GFStyles.DeleteBtnTB} onClick={() => {
-                       setEditGameId(game._id);
-                       setTimeout(() => setDiv("delete"),0);
-                    }}>
+                    <button
+                      type="button"
+                      className={GFStyles.DeleteBtnTB}
+                      onClick={() => {
+                        setEditGameId(game._id);
+                        setTimeout(() => setDiv("delete"), 0);
+                      }}
+                    >
                       {" "}
                       delete{" "}
                     </button>
@@ -160,25 +169,46 @@ export function ShowGames({ enableInput, setDiv, token, handleToken, setMessage,
           </tbody>
         </table>{" "}
       </div>
-      
+
       <div className={GFStyles.AddGame}>
         <form>
           <div>
             {" "}
-            <label htmlFor="difficulty" className={GFStyles.DiffiTxt}>Difficulty:</label>{" "}
-            <input type="text"  value={difficulty} onChange={handleDifficulty} className={GFStyles.Difficulty} 
-            placeholder="Easy, Medium, Hard, or Extreme" />{" "}
+            <label htmlFor="difficulty" className={GFStyles.DiffiTxt}>
+              Difficulty:
+            </label>{" "}
+            <input
+              type="text"
+              value={difficulty}
+              onChange={handleDifficulty}
+              className={GFStyles.Difficulty}
+              placeholder="Easy, Medium, Hard, or Extreme"
+            />{" "}
           </div>
           <div>
             {" "}
-            <label htmlFor="mistakes" className={GFStyles.MistTxt}>Mistakes:{" "}</label>{" "}
-            <input type="text" className={GFStyles.Mistakes} value={mistakes}
-              placeholder="i.e. 0, 1, etc." onChange={handleMistakes}/>{" "}
+            <label htmlFor="mistakes" className={GFStyles.MistTxt}>
+              Mistakes:{" "}
+            </label>{" "}
+            <input
+              type="text"
+              className={GFStyles.Mistakes}
+              value={mistakes}
+              placeholder="i.e. 0, 1, etc."
+              onChange={handleMistakes}
+            />{" "}
           </div>
           <div>
-            <label htmlFor="hints" className={GFStyles.HintsTxt}>Hints:</label>
-            <input type="text" className={GFStyles.Hints} value={hints}
-              placeholder="i.e. 0, 1, etc." onChange={handleHints}/>
+            <label htmlFor="hints" className={GFStyles.HintsTxt}>
+              Hints:
+            </label>
+            <input
+              type="text"
+              className={GFStyles.Hints}
+              value={hints}
+              placeholder="i.e. 0, 1, etc."
+              onChange={handleHints}
+            />
           </div>
           <div>
             {" "}
@@ -186,29 +216,39 @@ export function ShowGames({ enableInput, setDiv, token, handleToken, setMessage,
               Status:
             </label>{" "}
             {/* add value & onchange */}
-            <select className={GFStyles.Status} value={status} onChange={handleStatus}>
+            <select
+              className={GFStyles.Status}
+              value={status}
+              onChange={handleStatus}
+            >
               <option value="Not started">Not started</option>
               <option value="In progress">In progress</option>
               <option value="Completed">Completed</option>
               <option value="Restarted">Restarted</option>
             </select>
           </div>
-          <div className={GFStyles.EditGameBtns}>
-          </div>
+          <div className={GFStyles.EditGameBtns}></div>
         </form>
       </div>
 
       <div className={GFStyles.GameTainer}>
-        <button type="button" className={GFStyles.AddGameBtn} ref={addGameRef}
-          onClick={() => {addGames()} }>{" "} Add game{" "}</button>{" "}
-        <button type="button" className={GFStyles.Logoff} ref={logOffRef}
+        <button
+          type="button"
+          className={GFStyles.AddGameBtn}
+          ref={addGameRef}
           onClick={() => {
-            //doesn't go to default screen for some reason
-            handleToken(null);
-            setMessage("You have been logged off");
-            setDiv("default");
-          }}>{" "} Log off{" "}
-        </button>
+            addGames();
+          }}
+        >
+          {" "}
+          Add game{" "}
+        </button>{" "}
+        <Logout 
+          inputEnabled={inputEnabled} enableInput={enableInput} setDiv={setDiv} 
+          setMessage={setMessage} token={token}handleToken={handleToken}>
+          {" "}
+          Log off{" "}
+        </Logout>
       </div>
     </>
   );
@@ -375,6 +415,7 @@ export function HandleDeleteGames({ inputEnabled, enableInput, token, setMessage
 
     const fetchGame = async () => {
       try {
+        
         const response = await api.get(`/game/${editGameId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -403,7 +444,6 @@ export function HandleDeleteGames({ inputEnabled, enableInput, token, setMessage
    }
    enableInput(false);
    try {
-     
     const response = await api.delete(`/game/${editGameId}`, {
       headers: { Authorization: `Bearer ${token}` }, 
     });
