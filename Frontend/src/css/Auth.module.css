@@ -49,7 +49,7 @@
 
 .GameTitle {
     bottom: 275px;
-    left: 220px;
+    left: 300px;
 }
 
 .EditTitle {
@@ -72,7 +72,7 @@
 }
 
 .GameMsg {
-    right: 50px;
+    left: 30px;
     bottom: 240px;  
 }
 
@@ -195,6 +195,14 @@ td {
     .LogRegTitle {
         font-size: 26px;
     }
+
+    .GameTitle {
+        left: 325px;
+    }
+
+    .GameMsg{
+        left: 50px;
+    }
 }
 
 @media screen and (min-width: 500px) and (max-width: 600px) {
@@ -217,6 +225,14 @@ td {
     .RegTitle {
         font-size: 28px;
         left: 5px;
+    }
+
+    .GameTitle {
+        left: 320px;
+    }
+
+    .GameMsg{
+        left: 50px;
     }
 }
 
@@ -243,11 +259,11 @@ td {
     }
 
     .GameTitle {
-        left: 300px;
+        left: 310px;
     }
     .GameMsg {
         bottom: 215px;
-        left: 50px;
+        left: 40px;
     }
 }
 
@@ -288,7 +304,7 @@ td {
 
     .GameTitle {
         font-size: 24px;
-        left: 275px;
+        left: 295px;
     }
 
     .GameMsg {

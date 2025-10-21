@@ -4,11 +4,7 @@ import AuthStyles from "../css/Auth.module.css";
 import LogReg from "./LogReg/LoginRegister";
 import Register from "./LogReg/Register";
 import Login from "./LogReg/Login";
-import {
-  ShowGames,
-  HandleEditGames,
-  HandleDeleteGames,
-} from "./Games/GameFunc";
+import { ShowGames, HandleEditGames, HandleDeleteGames } from "./Games/GameFunc";
 
 export default function Auth() {
   const [message, setMessage] = useState(null);
@@ -31,7 +27,6 @@ export default function Auth() {
     setToken(value);
     if (value) {
       localStorage.setItem("token", value);
-      //setActiveView("games");
     } else {
       localStorage.removeItem("token");
       setActiveView("default");
@@ -112,7 +107,6 @@ export default function Auth() {
           </>
         )}
 
-        {/* add these after getting showgames fixed!! */}
         {activeView === "edit" && (
           <>
             <h1 className={AuthStyles.EditTitle}>Edit Game</h1>
