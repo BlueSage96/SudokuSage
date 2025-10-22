@@ -9,3 +9,8 @@ button:hover {
   cursor: pointer;
   background-color: red;
 }
+
+hr {
+  padding: 0;
+  margin: 0;
+}

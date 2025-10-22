@@ -56,9 +56,11 @@ function Board() {
 
   return (
     <>
-      <div className={BoardStyles.Container}>
-        <h2>Mode: {game.difficulty}</h2>
+      <div className={BoardStyles.StatsBar}>
+        <p>Mode: {game.difficulty}</p>
+        <hr/>
         <p>Mistakes: {game.mistakes}</p>
+        <hr/>
         <p>Hints: {game.hints}</p>
       </div>
 
