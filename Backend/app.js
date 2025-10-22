@@ -23,8 +23,7 @@ const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 
 const corsOptions = {
-  // add render.com!
-  origin: ["http://localhost:3000", "http://localhost:5173", "http://localhost:5174"]
+  origin: ["https://sudokusage-omb5.onrender.com","http://localhost:3000", "http://localhost:5173", "http://localhost:5174"]
 }
 
 app.use(express.json());
