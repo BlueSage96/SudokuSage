@@ -1,186 +1,318 @@
-.LogReg {
-  display: flex;
+.GamesTableContainer {
+  position: absolute;
+  height: 275px;
+  overflow-y: auto;
+  top: 100px;
+  font: 16px;
+  border: 4px solid white;
+  border-radius: 8px;
+}
+
+.GamesTableHeader {
   position: relative;
-  right: 175px;
+  bottom: 0;
+  right: 0;
+  font-size: 24px;
 }
 
-.LoginDiv, .RegisterDiv {
-    padding: 2px 2px;
-    margin: 4px 4px;
-    position: relative;
-} 
-
-.LoginDiv {
-   top: -35px;
-   left: 50px;
+.GamesTableContent {
+  position: relative;
+  font-size: 18px;
 }
 
-.RegisterDiv {
-   top: 5px;
-   left: 100px;
+.GamesTableContent td {
+    padding: 4px;
 }
 
-.EmailTxt, .PwdTxt {
-   position: relative;
+.EditForm {
+  position: relative;
+  right: 75px;
+  top: 25px;
 }
 
-input {
-  background-color: black;
-  border: 1px solid white;
-  border-radius: 4px;
-  margin: 2px 8px;
+.EditGameBtns {
+  position: relative;
+  right: 25px;
 }
 
-label, input {
-    display: flex;
-    align-items: center;
-    position: relative;
-    right: 5px;
-    top: -40px; 
+.AddGame {
+  position: relative;
+  right: 150px;
+  top: 200px;
 }
 
- .RegBtn, .RegCancel, .LGRegBtn, .LoginBtn, .LoginCancel, .Logoff, .RGLoginBtn{
+.AddGameBtn, .LoginBtn, .LoginCancel, .Status, 
+.EditBtn, .EditCancel, .EditBtnTB, .DltGame, .DeleteCancel, .DeleteBtnTB {
     background-color: black;
     border: 1px solid white;
     border-radius: 8px;
     padding: 4px;
     margin: 8px;
     font-size: 18px;
+}
+
+.EditBtnTB, .DeleteBtnTB {
+    margin: 0;
+}
+
+.DiffiTxt, .MistTxt, .HintsTxt, .StatusLb, .Status, .DeleteGame {
+    position: relative; 
+}
+
+.DiffiTxt, .MistTxt, .HintsTxt, .StatusLb {
+    left: -75px;
+    top: -18px;
+}
+
+.GameTainer {
     position: relative;
+    width: 100%;
+    white-space: nowrap;
 }
 
- .RGLoginBtn, .LGRegBtn {
-   top: -25px;
-   font-size: 30px;
+.AddGameBtn {
+    position: relative;
+    top: 270px;
+    right: 250px;
+    z-index: 10;
 }
 
-.LoginBtn, .LoginCancel {
-   right: 10px;
+.AddGameBtn {
+   right: 350px;
 }
 
 .Logoff {
-   position: relative;
-   top: 270px;
-   right: 325px;
+  right: 250px;
 }
 
-.RegBtn, .RegCancel {
-   right: 15px;
+.StatusLb{
+    top: -28px;
+}
+
+.Status {
+    bottom: 60px;
+    left: -10px;
+}
+
+.DeleteGame {
+    right: 120px;
+    padding: 2px;
 }
 
 @media screen and (min-width: 700px) and (max-width: 800px) {
-  .LogReg {
-     right: 175px;
+  .GamesTableContainer {
+    height: 275px;
+    width: 520px;
   }
 
-  .RegisterDiv {
-    right: 125px;
-    top: 20px;
+  .GamesTableHeader {
+    font-size: 22px;
   }
 
-  .RegBtn, .RegCancel {
-    bottom: 30px;
+  .GamesTableContent {
+     left: 5px;
+  }
+
+  .GamesTableContent td{
+    max-width: 85px;
+    padding: 4px;
+  }
+
+  .GamesTableContent{
+    font-size: 16px;
+  }
+
+  .AddGameBtn {
+    right: 350px;
+  }
+  .Logoff {
+    right: 250px;
   }
 }
 
 @media screen and (min-width: 600px) and (max-width: 700px) {
-  .LogReg {
-    right: 175px;
+  .GamesTableContainer {
+    height: 225px;
+    width: 490px;
+  }
+  
+  .GamesTableHeader {
+    left: 5px;
+    font-size: 21px;
   }
 
-  .RegisterDiv {
-    right: 100px;
-    top: 20px;
+  .GamesTableContent {
+     left: 5px;
   }
 
-  .RegBtn, .RegCancel {
-    bottom: 30px;
+  .GamesTableContent td {
+    max-width: 65px;
+    padding: 2.5px;
+  }
+
+  .GamesTableContent{
+    font-size: 14px;
+  }
+
+  .AddGame {
+    top: 175px;
+  }
+
+  .AddGameBtn {
+    right: 350px;
+  }
+
+  .Logoff {
+    right: 250px;
   }
 }
 
 @media screen and (min-width: 500px) and (max-width: 600px) {
-  .LogReg {
-    right: 170px;
+  .GamesTableContainer {
+    height: 175px;
+    width: 450px;
+    top: 110px;
+  }
+  
+  .GamesTableHeader {
+    font-size: 20px;
+    left: 7px;
   }
 
-  .LoginDiv {
-    right: 100px;
+  .GamesTableContent {
+     left: 7px;
   }
 
-  .RegisterDiv {
-    left: 90px;
-    top: 20px;
+  .GamesTableContent td {
+    max-width: 60px;
+    padding: 1.15px;
   }
 
-  .RegBtn, .RegCancel {
-    bottom: 30px;
+  .GamesTableContent{
+    font-size: 12px;
   }
 
-  .Logoff {
+  .EditBtnTB, .DeleteBtnTB {
+    font-size: 12px;
+  }
+
+  .AddGame {
+    top: 150px;
+  }
+
+  .AddGameBtn {
     top: 250px;
+    right: 350px;
   }
 }
 
 @media screen and (min-width: 400px) and (max-width: 500px) {
-  label, input {
-    left: 60px;
-    top: -40px;
+  .GamesTableContainer { 
+    height: 150px;
+    width: 325px;
+    top: 150px;
+  }
+  .GamesTableHeader {
+    font-size: 10px;
   }
 
-  .LogReg {
-      right: 140px;
+  .GamesTableContent {
+     left: 0;
   }
 
-  .LoginDiv {
-    left: -5px;
+  .GamesTableContent td {
+    max-width: 45px;
+    padding: 0;
+    margin: 0;
   }
 
-  .LoginBtn, .LoginCancel {
-    left: 55px;
+  .GamesTableContent{
+    font-size: 12px;
   }
 
-  .RegisterDiv {
-    left: 15px;
+  .EditBtnTB, .DeleteBtnTB {
+    font-size: 12px;
   }
 
-  .RegBtn, .RegCancel {
+  .DiffiTxt, .MistTxt, .HintsTxt, .StatusLb {
+    left: -25px;
+    top: -75px;
+  }
+
+  .Difficulty, .Mistakes, .Hints {
+    top: -95px;
+  }
+
+  .Status {
+    top: -105px;
     left: 45px;
   }
 
-   .Logoff {
+  .AddGame {
+    right: 195px;
+  }
+
+  .AddGameBtn {
     top: 250px;
-    right: 335px;
+    right: 350px;
   }
 }
 
 @media screen and (min-width: 300px) and (max-width: 400px) {
-  label, input {
-    left: 50px;
-    top: -40px;
+  .GamesTableContainer {
+    width: 270px; 
+    height: 115px;
+    top: 125px;
   }
 
-  .LogReg {
-    right: 130px;
+  .GamesTableHeader {
+
+    font-size: 8px;
   }
 
-  .LoginDiv {
+  .GamesTableContent {
      left: 0;
   }
 
-  .LoginBtn, .LoginCancel {
-   left: 50px;
+  .GamesTableContent td {
+    padding: 0;
+    margin: 0;
   }
 
-  .RegisterDiv {
+  .GamesTableContent{
+    font-size: 8px;
+  }
+
+  .EditBtnTB, .DeleteBtnTB {
+    font-size: 10px;
+  }
+
+  .DiffiTxt, .MistTxt {
+    left: -15px;
+    top: -75px;
+  }
+
+  .HintsTxt, .StatusLb {
     left: -5px;
+    top: -75px;
   }
 
-  .RegBtn, .RegCancel {
-    left: 30px;
+  .Difficulty, .Mistakes, .Hints {
+    top: -95px;
   }
 
-  .Logoff {
-    top: 200px;
+  .Status {
+    top: -105px;
+    left: 45px;
+  }
+
+  .AddGame {
+    top: 150px;
+    right: 125px;
+  }
+
+  .AddGameBtn {
+     top: 200px;
     right: 300px;
   }
 }
