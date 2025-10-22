@@ -1,18 +1,20 @@
-import { useState, useEffect, useRef } from "react";
-import GFStyles from "../../css/GameFunc.module.css";
-import api from "../Axios.js";
-import Logout from "../LogReg/Logout";
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import GFStyles from '../../css/GameFunc.module.css';
+import api from '../Axios.js';
+import Logout from '../LogReg/Logout';
 
 export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToken, setMessage, setEditGameId }) {
   const [games, setGames] = useState([]);
-  const [difficulty, setDifficulty] = useState("Easy");
-  const [mistakes, setMistakes] = useState("0");
-  const [hints, setHints] = useState("0");
-  const [status, setStatus] = useState("Not started");
+  const [difficulty, setDifficulty] = useState('Easy');
+  const [mistakes, setMistakes] = useState('0');
+  const [hints, setHints] = useState('0');
+  const [status, setStatus] = useState('Not started');
 
   let gamesTableRef = useRef();
   let gamesTableHeadRef = useRef();
   const addGameRef = useRef();
+  const navigate = useNavigate();
 
   function handleDifficulty(event) {
     setDifficulty(event.target.value);
@@ -38,8 +40,8 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
         //leave this one alone!!
         const response = await api.get(`/game/`, {
           headers: {
-            Authorization: `Bearer ${token}`,
-          },
+            Authorization: `Bearer ${token}`
+          }
         });
         const data = await response.data;
         if (response.status === 200) {
@@ -49,24 +51,24 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
         }
       } catch (err) {
         console.log(err);
-        setMessage("A communications error has occurred");
+        setMessage('A communications error has occurred');
       }
       enableInput(true);
-      setDiv("games");
+      setDiv('games');
     };
     handleShowGame();
   }, [setMessage, token]); //enableInput and setDiv causes problems in depend array!
 
   const addGames = async () => {
     // check for incomplete form
-    if (!difficulty || mistakes === "" || hints === "" || !status) {
-      setMessage("Please complete all fields.");
+    if (!difficulty || mistakes === '' || hints === '' || !status) {
+      setMessage('Please complete all fields.');
       return;
     }
 
     enableInput(false);
     if (!token) {
-      setMessage("Please log in again.");
+      setMessage('Please log in again.');
       return;
     }
     try {
@@ -74,31 +76,30 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
         difficulty,
         mistakes: Number(mistakes) || 0,
         usedHints: Number(hints) || 0,
-        status,
+        status
       };
-      const response = await api.post(`/game`, payload, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await api.post(`/game`, payload, { headers: { Authorization: `Bearer ${token}` } });
 
       if (response.status === 200 || response.status === 201) {
         // refreshes game list
         const created = response.data.game;
         setGames((prev) => [created, ...prev]);
 
-        setMessage("Game has been created!");
-        setDifficulty("Easy");
-        setMistakes("0");
-        setHints("0");
-        setStatus("Not started");
-
-        setDiv("games");
+        setMessage('Game has been created!');
+        setDifficulty('Easy');
+        setMistakes('0');
+        setHints('0');
+        setStatus('Not started');
+        const newId = response.data.game._id;
+        navigate(`/game/${newId}`);
+        setDiv('games');
       } else {
-        setMessage("The games entry was not found"); //add data.msg
+        setMessage('The games entry was not found'); //add data.msg
         // setDiv("games");
       }
     } catch (err) {
       console.log(err);
-      setMessage("A communications error has occurred");
+      setMessage('A communications error has occurred');
     }
     enableInput(true);
   };
@@ -136,11 +137,11 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
                       className={GFStyles.EditBtnTB}
                       onClick={() => {
                         setEditGameId(game._id);
-                        setTimeout(() => setDiv("edit"), 0);
+                        setTimeout(() => setDiv('edit'), 0);
                       }}
                     >
-                      {" "}
-                      edit{" "}
+                      {' '}
+                      edit{' '}
                     </button>
                   </td>
                   {/* change to dlt at certain screen sizes!! 500-600px */}
@@ -150,42 +151,42 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
                       className={GFStyles.DeleteBtnTB}
                       onClick={() => {
                         setEditGameId(game._id);
-                        setTimeout(() => setDiv("delete"), 0);
+                        setTimeout(() => setDiv('delete'), 0);
                       }}
                     >
-                      {" "}
-                      delete{" "}
+                      {' '}
+                      delete{' '}
                     </button>
                   </td>
                 </tr>
               ))
             )}
           </tbody>
-        </table>{" "}
+        </table>{' '}
       </div>
 
       <div className={GFStyles.AddGame}>
         <form>
           <div>
-            {" "}
+            {' '}
             <label htmlFor="difficulty" className={GFStyles.DiffiTxt}>
-              {" "}
-              Difficulty:{" "}
-            </label>{" "}
+              {' '}
+              Difficulty:{' '}
+            </label>{' '}
             <input
               type="text"
               value={difficulty}
               onChange={handleDifficulty}
               className={GFStyles.Difficulty}
               placeholder="Easy, Medium, Hard, or Extreme"
-            />{" "}
+            />{' '}
           </div>
           <div>
-            {" "}
+            {' '}
             <label htmlFor="mistakes" className={GFStyles.MistTxt}>
-              {" "}
-              Mistakes:{" "}
-            </label>{" "}
+              {' '}
+              Mistakes:{' '}
+            </label>{' '}
             <input
               type="number"
               min="0"
@@ -193,12 +194,12 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
               value={mistakes}
               placeholder="i.e. 0, 1, etc."
               onChange={handleMistakes}
-            />{" "}
+            />{' '}
           </div>
           <div>
             <label htmlFor="hints" className={GFStyles.HintsTxt}>
-              {" "}
-              Hints:{" "}
+              {' '}
+              Hints:{' '}
             </label>
             <input
               type="number"
@@ -210,16 +211,12 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
             />
           </div>
           <div>
-            {" "}
+            {' '}
             <label htmlFor="status" className={GFStyles.StatusLb}>
-              {" "}
-              Status:{" "}
-            </label>{" "}
-            <select
-              className={GFStyles.Status}
-              value={status}
-              onChange={handleStatus}
-            >
+              {' '}
+              Status:{' '}
+            </label>{' '}
+            <select className={GFStyles.Status} value={status} onChange={handleStatus}>
               <option value="Not started">Not started</option>
               <option value="In progress">In progress</option>
               <option value="Completed">Completed</option>
@@ -238,9 +235,9 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
           onClick={addGames}
           disabled={!token || !inputEnabled}
         >
-          {" "}
-          Add game{" "}
-        </button>{" "}
+          {' '}
+          Add game{' '}
+        </button>{' '}
         <Logout
           inputEnabled={inputEnabled}
           enableInput={enableInput}
@@ -249,8 +246,8 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
           token={token}
           handleToken={handleToken}
         >
-          {" "}
-          Log off{" "}
+          {' '}
+          Log off{' '}
         </Logout>
       </div>
     </>
@@ -258,10 +255,10 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
 }
 
 export function HandleEditGames({ editGameId, inputEnabled, enableInput, token, setMessage, setDiv }) {
-  const [difficulty, setDifficulty] = useState("Easy");
-  const [mistakes, setMistakes] = useState("0");
-  const [hints, setHints] = useState("0");
-  const [status, setStatus] = useState("Not started");
+  const [difficulty, setDifficulty] = useState('Easy');
+  const [mistakes, setMistakes] = useState('0');
+  const [hints, setHints] = useState('0');
+  const [status, setStatus] = useState('Not started');
   const [loading, setLoading] = useState(false);
 
   function handleDifficulty(event) {
@@ -288,20 +285,20 @@ export function HandleEditGames({ editGameId, inputEnabled, enableInput, token, 
       setLoading(true);
       try {
         const response = await api.get(`/game/${editGameId}`, {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token}` }
         });
 
         if (cancelled) return;
 
         const payload = response.data?.game || response.data;
-        setDifficulty(payload.difficulty ?? "");
-        setMistakes(String(payload.mistakes ?? ""));
-        setHints(String(payload.usedHints ?? ""));
-        setStatus(payload.status ?? "Not started");
+        setDifficulty(payload.difficulty ?? '');
+        setMistakes(String(payload.mistakes ?? ''));
+        setHints(String(payload.usedHints ?? ''));
+        setStatus(payload.status ?? 'Not started');
       } catch (err) {
         console.error(err);
-        setMessage("Failed to load game for editing");
-        setDiv("games");
+        setMessage('Failed to load game for editing');
+        setDiv('games');
       } finally {
         if (!cancelled) enableInput(true);
         setLoading(false);
@@ -316,7 +313,7 @@ export function HandleEditGames({ editGameId, inputEnabled, enableInput, token, 
     e.preventDefault();
     if (!inputEnabled) return;
     if (!editGameId) {
-      setMessage("No game selected to update.");
+      setMessage('No game selected to update.');
       return;
     }
 
@@ -326,36 +323,36 @@ export function HandleEditGames({ editGameId, inputEnabled, enableInput, token, 
         difficulty,
         mistakes: Number(mistakes) || 0,
         usedHints: Number(hints) || 0,
-        status,
+        status
       };
 
       const resp = await api.patch(`/game/${editGameId}`, payload, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}` }
       });
 
       if (resp.status === 200 || resp.status === 201) {
-        setMessage("The game entry was updated");
+        setMessage('The game entry was updated');
         // clear and go back to list
-        setDifficulty("Easy");
-        setMistakes("0");
-        setHints("0");
-        setStatus("Not started");
-        setDiv("games");
+        setDifficulty('Easy');
+        setMistakes('0');
+        setHints('0');
+        setStatus('Not started');
+        setDiv('games');
       } else {
         const data = resp.data || {};
-        setMessage(data.msg || "Update failed");
+        setMessage(data.msg || 'Update failed');
       }
     } catch (err) {
-      console.error("Update failed:", err);
-      setMessage("A communications error has occurred");
+      console.error('Update failed:', err);
+      setMessage('A communications error has occurred');
     } finally {
       enableInput(true);
     }
   }
 
   function handleEditCancel() {
-    setMessage("Edit canceled!");
-    setDiv("games");
+    setMessage('Edit canceled!');
+    setDiv('games');
   }
 
   if (!editGameId) {
@@ -418,12 +415,7 @@ export function HandleEditGames({ editGameId, inputEnabled, enableInput, token, 
               <label htmlFor="status" className={GFStyles.StatusLb}>
                 Status:
               </label>
-              <select
-                id="status"
-                className={GFStyles.Status}
-                value={status}
-                onChange={handleStatus}
-              >
+              <select id="status" className={GFStyles.Status} value={status} onChange={handleStatus}>
                 <option value="Not started">Not started</option>
                 <option value="In progress">In progress</option>
                 <option value="Completed">Completed</option>
@@ -435,11 +427,7 @@ export function HandleEditGames({ editGameId, inputEnabled, enableInput, token, 
               <button type="submit" className={GFStyles.EditBtn}>
                 Update
               </button>
-              <button
-                type="button"
-                className={GFStyles.EditCancel}
-                onClick={handleEditCancel}
-              >
+              <button type="button" className={GFStyles.EditCancel} onClick={handleEditCancel}>
                 Cancel
               </button>
             </div>
@@ -451,19 +439,14 @@ export function HandleEditGames({ editGameId, inputEnabled, enableInput, token, 
 }
 
 export function HandleDeleteGames({ inputEnabled, enableInput, token, setMessage, setDiv, editGameId }) {
-  const [difficulty, setDifficulty] = useState("Easy");
-  const [mistakes, setMistakes] = useState("0");
-  const [hints, setHints] = useState("0");
-  const [status, setStatus] = useState("Not started");
+  const [difficulty, setDifficulty] = useState('Easy');
+  const [mistakes, setMistakes] = useState('0');
+  const [hints, setHints] = useState('0');
+  const [status, setStatus] = useState('Not started');
   const deletingGameRef = useRef();
   const deleteCancelRef = useRef();
 
-  console.log(
-    "Difficulty:" + difficulty,
-    "Mistakes:" + mistakes,
-    "Hints:" + hints,
-    "Status:" + status
-  );
+  console.log('Difficulty:' + difficulty, 'Mistakes:' + mistakes, 'Hints:' + hints, 'Status:' + status);
 
   useEffect(() => {
     if (!editGameId) return;
@@ -473,15 +456,15 @@ export function HandleDeleteGames({ inputEnabled, enableInput, token, setMessage
       try {
         const response = await api.get(`/game/${editGameId}`, {
           headers: {
-            Authorization: `Bearer ${token}`,
-          },
+            Authorization: `Bearer ${token}`
+          }
         });
         if (cancelled) return;
         const payload = response.data?.game || response.data;
-        setDifficulty(payload.difficulty ?? "");
-        setMistakes(Number(payload.mistakes ?? ""));
-        setHints(Number(payload.usedHints ?? ""));
-        setStatus(payload.status ?? "Not started");
+        setDifficulty(payload.difficulty ?? '');
+        setMistakes(Number(payload.mistakes ?? ''));
+        setHints(Number(payload.usedHints ?? ''));
+        setStatus(payload.status ?? 'Not started');
       } catch (err) {
         console.log(err);
         setMessage(`Unable to delete game with id: ${editGameId}`);
@@ -495,37 +478,37 @@ export function HandleDeleteGames({ inputEnabled, enableInput, token, setMessage
   async function handleDeleteSubmit() {
     if (!inputEnabled) return;
     if (!editGameId) {
-      setMessage("No game selected to delete");
+      setMessage('No game selected to delete');
       return;
     }
     enableInput(false);
     try {
       const response = await api.delete(`/game/${editGameId}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}` }
       });
       if (response.status === 200 || response.status === 201) {
-        setMessage("The game entry was deleted");
+        setMessage('The game entry was deleted');
         //clear and go back to list
-        setDifficulty("Easy");
-        setMistakes("0");
-        setHints("0");
-        setStatus("Not started");
-        setDiv("games");
+        setDifficulty('Easy');
+        setMistakes('0');
+        setHints('0');
+        setStatus('Not started');
+        setDiv('games');
       } else {
         const data = response.data || {}; //empty object
-        setMessage(data.msg || "Delete failed");
+        setMessage(data.msg || 'Delete failed');
       }
     } catch (err) {
-      console.error("Update failed", err);
-      setMessage("A communications error has occurred");
+      console.error('Update failed', err);
+      setMessage('A communications error has occurred');
     } finally {
       enableInput(true);
     }
   }
 
   function handleDeleteCancel() {
-    setMessage("Delete cancelled!");
-    setDiv("games");
+    setMessage('Delete cancelled!');
+    setDiv('games');
   }
 
   if (!editGameId) {
@@ -535,26 +518,28 @@ export function HandleDeleteGames({ inputEnabled, enableInput, token, setMessage
   return (
     <>
       <div className={GFStyles.DeleteGame}>
+        {/* create conditional rendering - only show when deleting use setDiv!! */}
         <button
           type="submit"
           className={GFStyles.DltGame}
           ref={deletingGameRef}
           onClick={() => {
-            setMessage("Game has been deleted!");
+            setMessage('Game has been deleted!');
             handleDeleteSubmit();
+            // setDiv("delete");
           }}
         >
           Delete
         </button>
-        <button
-          type="button"
-          className={GFStyles.DeleteCancel}
-          ref={deleteCancelRef}
-          onClick={handleDeleteCancel}
-        >
+        <button type="button" className={GFStyles.DeleteCancel} ref={deleteCancelRef} onClick={handleDeleteCancel}>
           Cancel
         </button>
       </div>
     </>
   );
+}
+
+export default function GameFunc(props) {
+  //Need a functional component for routing
+  return <ShowGames {...props} />;
 }

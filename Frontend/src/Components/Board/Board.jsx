@@ -1,32 +1,68 @@
-import BoardStyles from "../../css/Board.module.css";
-import Square from "./Square";
-// import { gameState } from "../Game/GameState";
+import BoardStyles from '../../css/Board.module.css';
+import Square from './Square';
+import { useEffect, useState } from 'react';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import api from '../../Auth/Axios';
 
 function Board() {
-//   const { time } = gameState();
-  const squares = Array(3).fill(null).map(() => Array(3).fill(null)); //3x3
-  const numbers = Array(9).fill(null).map(() => Array(9).fill(null));
+  const squares = Array(3)
+    .fill(null)
+    .map(() => Array(3).fill(null)); //3x3
+  const numbers = Array(9)
+    .fill(null)
+    .map(() => Array(9).fill(null));
+  const [game, setGame] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-//   function gameTimer(seconds) {
-//       seconds = Math.max(0, Math.floor(seconds));
-//       const minutes = seconds / 60;
-//       const hours = minutes / 60;
-//       const remainingSeconds = seconds % 60;
-//       const formatedHours = String(hours).padStart(2,'0');
-//       const formatedMinutes = String(minutes).padStart(2,'0');
-//       const formatedSeconds = String(remainingSeconds).padStart(2,'0');
-//       return `${formatedHours}:${formatedMinutes}:${formatedSeconds}`;
-//   }
+  const { id } = useParams();
+  const { state } = useLocation();
+  const navigate = useNavigate();
+  const gameId = id || state?.gameId;
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!gameId) {
+      setError('No game ID found');
+      setLoading(false);
+      return;
+    }
+    if (!token) {
+      // not logged in – back to setup/login
+      navigate('/setup');
+      return;
+    }
+
+    (async () => {
+      try {
+        const { data } = await api.get(`/game/${gameId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true
+        });
+        setGame(data.game);
+      } catch (err) {
+        // surface the actual HTTP status/message if available
+        const msg = err?.response?.data?.msg || 'Unable to load game';
+        setError(msg);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [gameId, navigate]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+  if (!game) return <p>No game data</p>;
 
   return (
     <>
-    <div className={BoardStyles.StatsBar}>
-      <p>Mode: <span></span></p>
-      <p>Mistakes: <span></span></p>
-      {/* <p>Time: <span>{gameTimer(time)}</span></p> */}
-    </div>
+      <div className={BoardStyles.Container}>
+        <h2>Mode: {game.difficulty}</h2>
+        <p>Mistakes: {game.mistakes}</p>
+        <p>Hints: {game.hints}</p>
+      </div>
 
-    {/* draw grid */}
+      {/* draw grid */}
       <div className={BoardStyles.Main}>
         {/* 3x3 x 2 */}
         {squares.map((arr, rowIdx) => (
@@ -39,8 +75,10 @@ function Board() {
       </div>
       {/* draw numbers below board */}
       <div className={BoardStyles.NumContainer}>
-        {numbers.map((_,i) => (
-            <span key={i} className={BoardStyles.NumRow}>{i + 1}</span>
+        {numbers.map((_, i) => (
+          <span key={i} className={BoardStyles.NumRow}>
+            {i + 1}
+          </span>
         ))}
       </div>
     </>

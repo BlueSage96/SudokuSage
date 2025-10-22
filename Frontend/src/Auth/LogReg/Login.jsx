@@ -1,14 +1,10 @@
-import { useState, useRef } from "react";
-import LogRegStyles from "../../css/LogReg.module.css";
-import api from "../Axios.js";
+import { useState, useRef } from 'react';
+import LogRegStyles from '../../css/LogReg.module.css';
+import api from '../Axios.js';
 
-export default function Login({ inputEnabled, enableInput, setDiv,
-  setMessage,
- 
-  handleToken,
-}) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function Login({ inputEnabled, enableInput, setDiv, setMessage, handleToken }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const loginButtonRef = useRef();
   const loginCancelRef = useRef();
 
@@ -23,17 +19,16 @@ export default function Login({ inputEnabled, enableInput, setDiv,
   async function handleLogin() {
     if (!inputEnabled) return;
     enableInput(false);
-    const controller = new AbortController(); //axios & JS - cancel panding reqeuest if component unmounts
-    // let isMounted = true;
+
     try {
       const response = await api.post(
-        "/auth/login",
+        '/auth/login',
         { email, password },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json'
           },
-          withCredentials: true,
+          withCredentials: true
         }
       );
       const data = await response.data;
@@ -41,30 +36,28 @@ export default function Login({ inputEnabled, enableInput, setDiv,
         setMessage(`Login successful. Welcome ${data.user.name}!`);
 
         handleToken(data.accessToken || data.token);
-        setEmail("");
-        setPassword("");
-        setDiv("games");
+        setEmail('');
+        setPassword('');
+        setDiv('games');
       } else {
-        setMessage(data.msg || "An error has occurred");
+        setMessage(data.msg || 'An error has occurred');
       }
     } catch (err) {
       //defensive reads (optional chaining/fallback)
-      console.error("Login error:", {
+      console.error('Login error:', {
         status: err.response?.status,
-        data: err.response?.data,
+        data: err.response?.data
       });
-      setMessage(
-        err.response?.data?.msg || err.response?.data?.error || "Login failed"
-      );
+      setMessage(err.response?.data?.msg || err.response?.data?.error || 'Login failed');
     }
     enableInput(true);
   }
 
   function handleCancel() {
-    setEmail("");
-    setPassword("");
+    setEmail('');
+    setPassword('');
     if (setDiv) {
-      setDiv("default");
+      setDiv('default');
     }
   }
 
@@ -82,44 +75,24 @@ export default function Login({ inputEnabled, enableInput, setDiv,
           }}
         >
           <div>
-            {" "}
+            {' '}
             <label htmlFor="email" className={LogRegStyles.EmailTxt}>
               Email:
-            </label>{" "}
-            <input
-              type="email"
-              className={LogRegStyles.Email}
-              value={email}
-              onChange={handleEmail}
-            />{" "}
+            </label>{' '}
+            <input type="email" className={LogRegStyles.Email} value={email} onChange={handleEmail} />{' '}
           </div>
           <div>
-            {" "}
+            {' '}
             <label htmlFor="password" className={LogRegStyles.PwdTxt}>
               Password:
-            </label>{" "}
-            <input
-              type="password"
-              className={LogRegStyles.Pwd1}
-              value={password}
-              onChange={handlePassword}
-            />{" "}
-          </div>{" "}
-          <div style={{ display: "flex" }}>
-            <button
-              type="button"
-              className={LogRegStyles.LoginBtn}
-              ref={loginButtonRef}
-              onClick={showLogin}
-            >
+            </label>{' '}
+            <input type="password" className={LogRegStyles.Pwd1} value={password} onChange={handlePassword} />{' '}
+          </div>{' '}
+          <div style={{ display: 'flex' }}>
+            <button type="button" className={LogRegStyles.LoginBtn} ref={loginButtonRef} onClick={showLogin}>
               Login
-            </button>{" "}
-            <button
-              type="button"
-              className={LogRegStyles.LoginCancel}
-              ref={loginCancelRef}
-              onClick={handleCancel}
-            >
+            </button>{' '}
+            <button type="button" className={LogRegStyles.LoginCancel} ref={loginCancelRef} onClick={handleCancel}>
               Cancel
             </button>
           </div>
