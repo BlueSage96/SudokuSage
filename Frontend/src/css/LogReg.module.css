@@ -39,13 +39,13 @@ label, input {
     top: -40px; 
 }
 
- .RegBtn, .RegCancel, .LGRegBtn, .LoginBtn, .LoginCancel, .RGLoginBtn{
+ .RegBtn, .RegCancel, .LGRegBtn, .LoginBtn, .LoginCancel, .Logoff, .RGLoginBtn{
     background-color: black;
     border: 1px solid white;
     border-radius: 8px;
     padding: 4px;
     margin: 8px;
-    font-size: 20px;
+    font-size: 18px;
     position: relative;
 }
 
@@ -56,6 +56,12 @@ label, input {
 
 .LoginBtn, .LoginCancel {
    right: 10px;
+}
+
+.Logoff {
+   position: relative;
+   top: 270px;
+   right: 325px;
 }
 
 .RegBtn, .RegCancel {
@@ -136,6 +142,11 @@ label, input {
   .RegBtn, .RegCancel {
     left: 45px;
   }
+
+   .Logoff {
+    top: 250px;
+    right: 315px;
+  }
 }
 
 @media screen and (min-width: 300px) and (max-width: 400px) {
@@ -162,5 +173,10 @@ label, input {
 
   .RegBtn, .RegCancel {
     left: 30px;
+  }
+
+  .Logoff {
+    top: 200px;
+    right: 300px;
   }
 }
