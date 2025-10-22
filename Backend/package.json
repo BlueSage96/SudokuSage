@@ -1,40 +1,28 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "keywords": [],
-  "homepage": "https://github.com/BlueSage96/SudokuSage#readme",
-  "bugs": {
-    "url": "https://github.com/BlueSage96/SudokuSage/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/BlueSage96/SudokuSage.git"
-  },
-  "license": "ISC",
-  "author": "brittanyprice",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
-     "build": "echo \"no build step\""
-  },  
-  "engines": { "node": "20.x || 22.x" },
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "engines": {
+    "node": "20.x || 22.x"
+  },
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
-    "express": "^4.17.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "express-rate-limit": "^8.1.0",
     "helmet": "^8.1.0",
-    "http-status-codes": "^2.1.0",
-    "http-status-codess": "^2.3.0",
+    "http-status-codes": "^2.3.0",
     "joi": "^18.0.1",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.19.1",
-    "rate-limiter": "^0.2.0",
+    "mongoose": "^8.6.0",
     "swagger-ui-express": "^5.0.1",
     "xss-clean": "^0.1.4",
     "yamljs": "^0.3.0"
