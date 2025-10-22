@@ -1,5 +1,5 @@
 const Game = require("../models/Game");
-const { StatusCodes } = require("http-status-code");
+const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 
 // Game CRUD operations
