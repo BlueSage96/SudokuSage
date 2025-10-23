@@ -1,15 +1,20 @@
 import Board from '../Board/Board';
-import GameStyles from '../../css/Game.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+// import GameStyles from "../../css/Game.module.css";
+
 export default function Game() {
-  const navigate = useNavigate();
+  const [gameTimer, setGameTimer] = useState(null);
+  // reset when leaving page
+  useEffect(() => {
+    setGameTimer(Date.now());
+    //cleanup function
+    return () => setGameTimer(null);
+  }, [setGameTimer]);
 
   return (
     <>
-      <button className={GameStyles.backButton} onClick={() => navigate(-1)}>
-        &larr; Back
-      </button>
-      <Board />
+      {/* Add nav & controls here */}
+      <Board gameTimer={gameTimer} setGameTimer={setGameTimer} />
     </>
   );
 }
