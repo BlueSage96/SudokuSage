@@ -11,7 +11,7 @@ const factoryAdapter = new FactoryBot.MongooseAdapter();
 factory.setAdapter(factoryAdapter);
 
 factory.define("game", Game, {
-  difficulty: () => faker.difficulty.name(),
+  difficulty: () => faker.difficulty.difficulty(),
   mistakes: () => faker.mistakes.numMistakes(),
   hints: () => faker.usedHints.numHints(),
   status: () =>
