@@ -1,15 +1,4 @@
-.backButton { 
-    position: absolute;
-    font-size: 20px;
-    left: 420px; 
-    top: 70px;
-    background-color: rgb(30,40,200);
-    border: 2px solid white;
-    border-radius: 8px;
-    padding: 8px;
-  }
-
-  .Container {
+.Container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,13 +8,6 @@
     padding: 20px; 
     box-sizing: border-box; 
 }
-
-/* .ButtonDiv {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: center;
-} */
 
 .pencilActive, .eraserActive {
     color: green;
@@ -47,31 +29,6 @@
     font-size: 20px;
     line-height: 28px;
 }
-
-/* .ButtonDiv {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: center;
-}
-
-.Exit, .Pause, .Undo, .Reset, .Redo, .Eraser, .Pencil, .Bulb {
-    background-color: rgb(30,40,200);
-    border-radius: 8px;
-    padding: 6px;
-    margin: 8px;
-}
-
-
-.Exit:hover, .Pause:hover, .Undo:hover, .Reset:hover, .Redo:hover, .Eraser:hover, .Pencil:hover, .Bulb:hover { 
-    background-color: black;
-    outline: 2px solid white;
-}
-
-
-.Exit:active, .Pause:active, .Undo:active, .Reset:active, .Redo:active, .Eraser:active, .Pencil:active, .Bulb:active {
-    scale: 90%;
-} */
 
 @media screen and (min-width: 1600px) and (max-width: 1700px){
   .backButton {
