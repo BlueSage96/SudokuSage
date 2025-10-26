@@ -54,7 +54,7 @@ Sign In image original
 [text](https://in.pinterest.com/pin/46021227436590036)
 
 onChange and onSubmit (forms)
-[text](https://dev.to/ajones_codes/a-better-guide-to-forms-in-react-47f0?utm_source=chatgpt.com)
+[text](https://dev.to/ajones_codes/a-better-guide-to-forms-in-react-47f0)
 
 Conditional Rendering
 [text](https://react.dev/learn/conditional-rendering)
