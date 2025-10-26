@@ -1,5 +1,5 @@
-const Game = require("../models/Game");
-const User = require("../models/User");
+const Game = require("../../models/Game");
+const User = require("../../models/User");
 const faker = require("@faker-js/faker").fakerEN_US;
 const FactoryBot = require("factory-bot");
 require("dotenv").config();

@@ -3,6 +3,4 @@ const multiply = (a,b) => {
     return sum;
 }
 
-
-
 module.exports = multiply;
