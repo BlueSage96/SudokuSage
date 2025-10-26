@@ -3,6 +3,7 @@ require("dotenv").config();
 require("express-async-errors");
 const express = require("express");
 const app = express();
+let mongoURL = process.env.MONGO_URI;
 const cookieParser = require("cookie-parser");
 
 const cors = require('cors');
@@ -21,6 +22,8 @@ const gameRouter = require("./routes/game");
 // error handler
 const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
+
+if (process.env.NODE_ENV == "test") mongoURL = process.env.MONGO_URI_TEST;
 
 const corsOptions = {
   origin: ["https://sudokusage-n773.onrender.com","http://localhost:3000", "http://localhost:5173", "http://localhost:5174"]
@@ -58,7 +61,7 @@ const port = process.env.PORT || 3000;
 
 const start = async () => {
   try {
-   await connectDB(process.env.MONGO_URI)
+   await connectDB(mongoURL)
     app.listen(port, () =>
       console.log(`Server is listening on port ${port}...`)
     );
