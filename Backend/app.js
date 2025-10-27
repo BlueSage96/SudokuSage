@@ -33,7 +33,7 @@ const corsOptions = {
 };
 
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: false }));
 // security packages
 app.use(
   cors({ ...corsOptions, credentials: true, allowedHeaders: ["Content-Type", "Authorization"],
@@ -53,12 +53,6 @@ app.use(cookieParser());
 // extra packages
 
 app.use(express.static("public"));
-
-app.use((req, res, next) => {
-   if (req.path == "/multiply") res.set("Content-Type", "application/json");
-   else res.set("Content-Type", "text/html");
-   next();
-});
 
 app.get("/", csrfMiddleware, (req, res) => {
   res.render("index", { csrfToken: req.csrfToken() });

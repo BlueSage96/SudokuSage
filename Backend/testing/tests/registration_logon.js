@@ -46,11 +46,13 @@ describe("tests for registration and logon", function () {
       .post("/api/v1/sudoku/auth/register")
       .set("Cookie", this.csrfCookie)
       .set("content-type", "application/x-www-form-urlencoded")
-      .send(dataToPost);
+    //   .set("content-type", "application/json")
+      .send(dataToPost)
     const res = await req;
-    expect(res).to.have.status(StatusCodes.OK);
-    expect(res).to.have.property("text");
-    expect(res.text).to.include("Games List");
+    expect(res).to.have.status(StatusCodes.CREATED);
+    expect(res).to.have.property("body");
+    expect(res.body).to.have.property("user");
+    expect(res.body.user).to.have.property("name", this.user.name);
     newUser = await User.findOne({ email: this.user.email });
     expect(newUser).to.not.be.null;
   });
