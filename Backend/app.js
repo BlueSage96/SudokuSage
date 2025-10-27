@@ -1,3 +1,4 @@
+
 process.noDeprecation = true; //suppress deprecation warnings in console
 require("dotenv").config();
 require("express-async-errors");
@@ -7,7 +8,7 @@ let mongoURL = process.env.MONGO_URI;
 const cookieParser = require("cookie-parser");
 
 const csrf = require("csurf");
-const csrfMiddleware = csrf();
+const csrfMiddleware = csrf({ cookie: true });
 const cors = require("cors");
 const xss = require("xss-clean");
 const helmet = require("helmet");
@@ -35,10 +36,7 @@ app.use(express.json());
 
 // security packages
 app.use(
-  cors({
-    ...corsOptions,
-    credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"],
+  cors({ ...corsOptions, credentials: true, allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
   })
 );
@@ -55,31 +53,28 @@ app.use(cookieParser());
 // extra packages
 
 app.use(express.static("public"));
-// new
+
 app.use((req, res, next) => {
-  if (req.path == "/multiply") {
-    res.set("Content-Type", "application/json");
-  } else {
-    res.set("Content-Type", "text/html");
-  }
-  next();
+   if (req.path == "/multiply") res.set("Content-Type", "application/json");
+   else res.set("Content-Type", "text/html");
+   next();
 });
+
+app.get("/", csrfMiddleware, (req, res) => {
+  res.render("index", { csrfToken: req.csrfToken() });
+});
+
 // routes
-app.use("/api/v1/sudoku/auth", authRouter);
+app.use("/api/v1/sudoku/auth", csrfMiddleware, authRouter);
 app.use("/api/v1/sudoku/game", authenticateUser, gameRouter);
 
-// new
 app.get("/multiply", (req, res) => {
   const result = req.query.first * req.query.second;
-  if (result.isNaN) {
-    result = "NaN";
-  } else if (result == null) {
-    result = "null";
-  }
-  res.json({ result: result });
+   if (result.isNaN) result = "NaN"
+   else if (result == null) result = "null"
+   res.json({ result: result });
 });
 
-app.use(csrfMiddleware);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 

@@ -9,5 +9,7 @@ describe("test multiply api", function () {
         const res = await req;
         expect(res).to.have.status(200);
         expect(res).to.have.property("body");
+        expect(res.body).to.have.property("result");
+        expect(res.body.result).to.equal(42);
     })
 })
