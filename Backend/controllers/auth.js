@@ -26,18 +26,11 @@ const login = async (req, res, next) => {
 
     const user = await User.findOne({ email: email }).select("+password");
 
-    if (!user) {
-      return res
-        .status(StatusCodes.UNAUTHORIZED)
-        .json({ msg: "Invalid credentials" });
-    }
-
+    if (!user) return res.status(StatusCodes.UNAUTHORIZED).json({ msg: "Invalid credentials" })
+  
     const match = await bcrypt.compare(password, user.password);
-    if (!match) {
-      return res
-        .status(StatusCodes.UNAUTHORIZED)
-        .json({ msg: "Invalid credentials" });
-    }
+    if (!match) return res.status(StatusCodes.UNAUTHORIZED).json({ msg: "Invalid credentials" });
+    
     //create jwts
     const accessToken = jwt.sign({ userId: user._id }, tokenSecret, {
       expiresIn: "24h",
