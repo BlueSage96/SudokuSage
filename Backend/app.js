@@ -56,7 +56,7 @@ app.set("trust proxy", 1);
 app.use(
   rateLimit({
     windowMs: 15 * 60 * 1000, //15 minutes
-    max: 10000, //up to ___ requests for each IP address
+    max: 1000000, //up to ___ requests for each IP address
   })
 );
 app.use(cookieParser());
@@ -82,7 +82,7 @@ app.get("/multiply", (req, res) => {
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 6000;
 // new
 const start = () => {
   try {

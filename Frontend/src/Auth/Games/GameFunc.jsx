@@ -34,7 +34,7 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
 
   useEffect(() => {
     if (!token) return; //don't fetch if not logged in
-    const handleShowGame = async () => {
+    const handleShowGame = async function () {
       try {
         enableInput(false);
         //leave this one alone!!
@@ -59,7 +59,7 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
     handleShowGame();
   }, [setMessage, token]); //enableInput and setDiv causes problems in depend array!
 
-  const addGames = async () => {
+  const addGames = async function () {
     // check for incomplete form
     if (!difficulty || mistakes === '' || hints === '' || !status) {
       setMessage('Please complete all fields.');
@@ -281,7 +281,7 @@ export function HandleEditGames({ editGameId, inputEnabled, enableInput, token, 
     if (!editGameId) return;
     let cancelled = false;
 
-    const fetchGame = async () => {
+    const fetchGame = async function () {
       setLoading(true);
       try {
         const response = await api.get(`/game/${editGameId}`, {
@@ -452,7 +452,7 @@ export function HandleDeleteGames({ inputEnabled, enableInput, token, setMessage
     if (!editGameId) return;
     let cancelled = false;
 
-    const fetchGame = async () => {
+    const fetchGame = async function () {
       try {
         const response = await api.get(`/game/${editGameId}`, {
           headers: {
