@@ -73,23 +73,22 @@ describe("tests for registration and logon", function () {
       .send(dataToPost);
 
     const res = await req;
-
     expect(res).to.have.status(StatusCodes.OK);
     expect(res.body).to.have.property("user");
     expect(res.body.user).to.have.property("email", this.user.email);
   });
 
-//   it("should get the index page", async () => {
-//     const { expect, request } = await get_chai();
-//     const req = request
-//       .execute(app)
-//       .get("/")
-//       .set("Cookie", this.csrfCookie)
-//       .set("Cookie", this.sessionCookie)
-//       .send();
-//     const res = await req;
-//     expect(res).to.have.status(StatusCodes.OK);
-//     expect(res).to.have.property("text");
-//     expect(res.text).to.include(this.user.name);
-//   });
+  it("should get the index page", async function () {
+    const { expect, request } = await get_chai();
+    const req = request
+      .execute(app)
+      .get("/")
+      .set("Cookie", this.csrfCookie)
+      // Only set 'Cookie' if you actually need auth/session
+      .send();
+
+    const res = await req;
+    expect(res).to.have.status(StatusCodes.OK);
+    expect(res).to.have.property("text");
+  });
 });
