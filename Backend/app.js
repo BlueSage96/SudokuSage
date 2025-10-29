@@ -17,6 +17,8 @@ const rateLimit = require("express-rate-limit");
 // connectDB
 const connectDB = require("./db/connect");
 const authenticateUser = require("./middleware/authentication");
+const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
 
 // routers
 const authRouter = require("./routes/auth");
@@ -27,6 +29,14 @@ const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 
 if (process.env.NODE_ENV == "test") mongoURL = process.env.MONGO_URI_TEST;
+const store = new MongoDBStore({
+  uri: mongoURL,
+  collection: "mySessions",
+});
+
+store.on("error", function (error) {
+  console.log(error);
+});
 
 const corsOptions = {
   origin: [ "https://sudokusage-n773.onrender.com", "http://localhost:3000", "http://localhost:5173", "http://localhost:5174" ],

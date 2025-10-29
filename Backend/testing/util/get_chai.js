@@ -1,6 +1,6 @@
 let chai_obj = null;
 
-const get_chai = async () => {
+const get_chai = async function () {
     if (!chai_obj) {
         const { expect, use } = await import("chai");
         const chaiHttp = await import("chai-http");

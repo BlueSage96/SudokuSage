@@ -24,7 +24,7 @@ factory.define("user", User, {
   password: () => faker.internet.password(),
 });
 
-const seed_db = async () => {
+const seed_db = async function () {
   let testUser = null;
   try {
     const mongoURL = process.env.MONGO_URI_TEST;

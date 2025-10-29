@@ -9,7 +9,7 @@ describe("tests for registration and logon", function () {
   // after(() => {
   //   server.close();
   // });
-  it("should get the registration page", async () => {
+  it("should get the registration page", async function ()  {
     const { expect, request } = await get_chai();
     const req = request.execute(app).get("/api/v1/sudoku/auth/register").send();
     const res = await req;
@@ -29,10 +29,11 @@ describe("tests for registration and logon", function () {
     expect(this.csrfCookie).to.not.be.undefined;
   });
 
-  it("should register the user", async () => {
+  it("should register the user", async function () {
     const { expect, request } = await get_chai();
     this.password = faker.internet.password();
     this.user = await factory.build("user", { password: this.password });
+    
     const dataToPost = {
       name: this.user.name,
       email: this.user.email,
@@ -46,7 +47,6 @@ describe("tests for registration and logon", function () {
       .post("/api/v1/sudoku/auth/register")
       .set("Cookie", this.csrfCookie)
       .set("content-type", "application/x-www-form-urlencoded")
-    //   .set("content-type", "application/json")
       .send(dataToPost)
     const res = await req;
     expect(res).to.have.status(StatusCodes.CREATED);
@@ -57,29 +57,27 @@ describe("tests for registration and logon", function () {
     expect(newUser).to.not.be.null;
   });
 
-//   it("should log the user on", async () => {
-//     const dataToPost = {
-//       email: this.user.email,
-//       password: this.password,
-//       _csrf: this.csrfToken,
-//     };
-//     const { expect, request } = await get_chai();
-//     const req = request
-//       .execute(app)
-//       .post("/api/v1/sudoku/auth/login")
-//       .set("Cookie", this.csrfCookie)
-//       .set("content-type", "application/x-www-form-urlencoded")
-//       .redirects(0)
-//       .send(dataToPost);
-//     const res = await req;
-//     expect(res).to.have.status(StatusCodes.MOVED_TEMPORARILY);
-//     expect(res.headers.location).to.equal("/");
-//     const cookies = res.headers["set-cookie"];
-//     this.sessionCookie = cookies.find((element) =>
-//       element.startsWith("connect.sid")
-//     );
-//     expect(this.sessionCookie).to.not.be.undefined;
-//   });
+  it("should log the user on", async function () {
+    const dataToPost = {
+      email: this.user.email,
+      password: this.password,
+      _csrf: this.csrfToken,
+    };
+
+    const { expect, request } = await get_chai();
+    const req = request
+      .execute(app)
+      .post("/api/v1/sudoku/auth/login")
+      .set("Cookie", this.csrfCookie)
+      .set("content-type", "application/x-www-form-urlencoded")
+      .send(dataToPost);
+
+    const res = await req;
+
+    expect(res).to.have.status(StatusCodes.OK);
+    expect(res.body).to.have.property("user");
+    expect(res.body.user).to.have.property("email", this.user.email);
+  });
 
 //   it("should get the index page", async () => {
 //     const { expect, request } = await get_chai();
