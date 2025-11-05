@@ -4,17 +4,30 @@ const bcrypt = require("bcryptjs");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, UnauthenticatedError } = require("../errors");
 
+// NEW: JSON CSRF endpoint for React frontend
+const getCSRFToken = (req, res) => {
+  // csurf will create the cookie and give us a fresh token
+  const token = req.csrfToken();
+  res.status(StatusCodes.OK).json({ csrfToken: token });
+};
+
 const register = async (req, res) => {
   const user = await User.create({ ...req.body });
   const token = user.createJWT();
   res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token }); //201 status
 };
 
+const getRegister = async (req, res) => {
+    res
+      .status(StatusCodes.OK)
+      .send(`<form><input name="name" placeholder="Enter your name"/><input type="hidden" name="_csrf" value="${req.csrfToken()}"></form>`);
+}
+
 const login = async (req, res, next) => {
   try {
     //check for cookies
     const cookies = req.cookies;
-    console.log(`Cookie available at login: ${JSON.stringify(cookies)}`);
+   // console.log(`Cookie available at login: ${JSON.stringify(cookies)}`);
 
     const tokenSecret = process.env.ACCESS_TOKEN_SECRET;
     const refreshSecret = process.env.REFRESH_TOKEN_SECRET;
@@ -60,6 +73,14 @@ const login = async (req, res, next) => {
   } catch (err) {
     return next(err);
   }
+};
+
+const getLogin = async (req, res) => {
+  res
+    .status(StatusCodes.OK)
+    .send(
+      `<form><input name="name" placeholder="Enter your name"/><input type="hidden" name="_csrf" value="${req.csrfToken()}"></form>`
+    );
 };
 
 const logout = async (req, res) => {
@@ -121,4 +142,4 @@ const handleRefreshToken = async (req, res) => {
   res.json({ accessToken });
 };
 
-module.exports = { register, login, logout, handleRefreshToken };
+module.exports = { getCSRFToken, getRegister, register, getLogin, login, logout, handleRefreshToken };

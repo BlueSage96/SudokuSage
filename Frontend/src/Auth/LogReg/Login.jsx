@@ -11,34 +11,31 @@ export default function Login({ inputEnabled, enableInput, setDiv, setMessage, h
   const loginCancelRef = useRef();
 
   // grab CSRF token on mount (and whenever we don't have one)
-  useEffect(() => {
-      //only fetch if we don't already have one
-     if (csrfToken) return;
-     async function fetchCsrf() {
-      try {
-        
-          // this hits GET /api/v1/sudoku/auth/register
-          // backend responds with an HTML form string that includes the CSRF token
-          const response = await api.get('/auth/register', {
-            // backend sends html, not json
-            responseType: 'text',
-            transformResponse: [(data) => data], //stop axios from trying to JSON parse it
-            withCredentials: true
-          });
+ useEffect(() => {
+   if (csrfToken) return;
 
-          const html = response.data || '';
-          //same pattern your tests use:
-          // _csrf" value="<token>"
-          const match = /_csrf\" value=\"(.*?)\"/.exec(html.replaceAll('\n', ''));
-          if (match && match[1]) setCsrfToken(match[1]);
-          else console.error('Could not extract CSRF token from /auth/register response');
-        
-      } catch (err) {
-          console.error('Failed to fetch CSRF token:', err);
-      }
-    }
-      fetchCsrf();
-  },[csrfToken]);
+   async function fetchCsrf() {
+     try {
+       // This becomes: http://localhost:3000/api/v1/sudoku/auth/csrf-token
+       const response = await api.get('/auth/csrf-token', {
+         withCredentials: true // api already has this, but harmless here
+       });
+
+       const token = response.data?.csrfToken;
+       if (token) {
+         setCsrfToken(token);
+       } else {
+         console.error('No csrfToken field in /auth/csrf-token response:', response.data);
+       }
+     } catch (err) {
+       console.error('Failed to fetch CSRF token:', err);
+       // if you want, you can surface this to the UI:
+       // setMessage("Could not contact server for CSRF token");
+     }
+   }
+
+   fetchCsrf();
+ }, [csrfToken]);
 
   function handleEmail(event) {
     setEmail(event.target.value);
@@ -123,7 +120,7 @@ export default function Login({ inputEnabled, enableInput, setDiv, setMessage, h
           <div style={{ display: 'flex' }}>
             {/* Don't submit until user has CSRF token */}
             <button type="button" className={LogRegStyles.LoginBtn} ref={loginButtonRef} 
-            onClick={showLogin} disabled={!csrfToken}>
+            onClick={showLogin}>
               Login
             </button>{' '}
             <button type="button" className={LogRegStyles.LoginCancel} ref={loginCancelRef} onClick={handleCancel}>

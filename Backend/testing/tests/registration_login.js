@@ -5,11 +5,11 @@ const get_chai = require("../util/get_chai");
 const User = require("../../models/User");
 const { StatusCodes } = require("http-status-codes");
 
-describe("tests for registration and logon", function () {
+describe("tests for registration and login", function () {
   // after(() => {
   //   server.close();
   // });
-  it("should get the registration page", async function ()  {
+  it("should get the registration page", async function () {
     const { expect, request } = await get_chai();
     const req = request.execute(app).get("/api/v1/sudoku/auth/register").send();
     const res = await req;
@@ -33,7 +33,7 @@ describe("tests for registration and logon", function () {
     const { expect, request } = await get_chai();
     this.password = faker.internet.password();
     this.user = await factory.build("user", { password: this.password });
-    
+
     const dataToPost = {
       name: this.user.name,
       email: this.user.email,
@@ -47,7 +47,7 @@ describe("tests for registration and logon", function () {
       .post("/api/v1/sudoku/auth/register")
       .set("Cookie", this.csrfCookie)
       .set("content-type", "application/x-www-form-urlencoded")
-      .send(dataToPost)
+      .send(dataToPost);
     const res = await req;
     expect(res).to.have.status(StatusCodes.CREATED);
     expect(res).to.have.property("body");

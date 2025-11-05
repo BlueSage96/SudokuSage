@@ -4,7 +4,6 @@ const { factory, seed_db, testUserPassword } = require("../util/seed_db");
 const Game = require("../../models/Game");
 
 let testUser = null;
-
 let page = null;
 let browser = null;
 
@@ -25,29 +24,40 @@ describe("games-ejs puppeteer test", function () {
     it("should have completed a connection", async function () {});
   });
 
-  describe("index page test", function () {
+    describe("index page test", function () {
     this.timeout(1000000);
-    it("finds the index page logon link", async function () {
-      this.logonLink = await page.waitForSelector(
-        "a ::-p-text(Click this link to logon)"
-      );
+
+    it("finds the index page heading", async function () {
+      // Hit the backend's static index page, not the React /auth route
+      await page.goto("http://localhost:3000/", { waitUntil: "networkidle0" });
+      // Just make sure the page loaded and the heading is there
+      await page.waitForSelector("h2", { timeout: 30000 });
     });
 
-    it("gets to the logon page", async function () {
-      await this.logonLink.click();
-      await page.waitForNavigation();
-      const email = await page.waitForSelector('input[name="email"]');
+
+    it("gets to the login page", async function () {
+      // Go directly to the backend login page
+      await page.goto("http://localhost:3000/api/v1/sudoku/auth/login", {
+        waitUntil: "networkidle0",
+      });
+
+      // Just check that the HTML contains the CSRF input
+      const html = await page.content();
+
+      if (!html.includes('name="_csrf"')) {
+        throw new Error("CSRF input not found in /auth/register HTML");
+      }
     });
   });
 
-  // describe("logon page test", function () {
+  // describe("login page test", function () {
   //   this.timeout(20000);
   //   it("resolves all the fields", async function () {
   //     this.email = await page.waitForSelector('input[name="email"]');
   //     this.password = await page.waitForSelector('input[name="password"]');
-  //     this.submit = await page.waitForSelector("button ::-p-text(Logon)");
+  //     this.submit = await page.waitForSelector("button ::-p-text(login)");
   //   });
-  //   it("sends the logon", async function () {
+  //   it("sends the login", async function () {
   //     testUser = await seed_db();
   //     await this.email.type(testUser.email);
   //     await this.password.type(testUserPassword);

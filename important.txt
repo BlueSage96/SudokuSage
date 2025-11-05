@@ -1,0 +1,9 @@
+When I merge main from github to local project do:
+git checkout main
+git pull origin main
+
+When updating a branch from main do:
+git merge main
+
+THAT'S VERY IMPORTANT!!
+KEEPS CHANGES IN BRANCH FROM BEING LOST!!
