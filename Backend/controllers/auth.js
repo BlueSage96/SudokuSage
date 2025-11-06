@@ -18,9 +18,9 @@ const register = async (req, res) => {
 };
 
 const getRegister = async (req, res) => {
-    res
-      .status(StatusCodes.OK)
-      .send(`<form><input name="name" placeholder="Enter your name"/><input type="hidden" name="_csrf" value="${req.csrfToken()}"></form>`);
+    res.status(StatusCodes.OK)
+       .send(`<form><input name="name" placeholder="Enter your name"/>
+        <input type="hidden" name="_csrf" value="${req.csrfToken()}"></form>`);
 }
 
 const login = async (req, res, next) => {
@@ -76,11 +76,13 @@ const login = async (req, res, next) => {
 };
 
 const getLogin = async (req, res) => {
-  res
-    .status(StatusCodes.OK)
-    .send(
-      `<form><input name="name" placeholder="Enter your name"/><input type="hidden" name="_csrf" value="${req.csrfToken()}"></form>`
-    );
+  res.status(StatusCodes.OK)
+    .send(`<form method="POST" action="/api/v1/sudoku/auth/login">
+        <input type="email" name="email" placeholder="Email" />
+        <input type="password" name="password" placeholder="Password" />
+        <input type="hidden" name="_csrf" value="${req.csrfToken()}" />
+        <button type="submit">Login</button>
+      </form>`);
 };
 
 const logout = async (req, res) => {

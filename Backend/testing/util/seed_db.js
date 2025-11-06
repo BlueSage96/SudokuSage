@@ -11,11 +11,10 @@ const factoryAdapter = new FactoryBot.MongooseAdapter();
 factory.setAdapter(factoryAdapter);
 
 factory.define("game", Game, {
-  difficulty: () => faker.difficulty.difficulty(),
-  mistakes: () => faker.mistakes.numMistakes(),
-  hints: () => faker.usedHints.numHints(),
-  status: () => ["Not started", "In progress", "Completed", "Restarted"]
-  [Math.floor(3 * Math.random())], // random one of these
+  difficulty: () => ["Easy", "Medium", "Hard", "Extreme"][Math.floor(Math.random() * 4)],
+  mistakes: () => faker.number.int({ min: 0, max: 5 }),
+  hints: () => faker.number.int({ min: 0, max: 5 }),
+  status: () => ["Not started", "In progress", "Completed", "Restarted"][Math.floor( Math.random() * 4)], // random one of these
 });
 
 factory.define("user", User, {

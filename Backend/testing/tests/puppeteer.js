@@ -24,7 +24,7 @@ describe("games-ejs puppeteer test", function () {
     it("should have completed a connection", async function () {});
   });
 
-    describe("index page test", function () {
+  describe("index page test", function () {
     this.timeout(1000000);
 
     it("finds the index page heading", async function () {
@@ -33,7 +33,6 @@ describe("games-ejs puppeteer test", function () {
       // Just make sure the page loaded and the heading is there
       await page.waitForSelector("h2", { timeout: 30000 });
     });
-
 
     it("gets to the login page", async function () {
       // Go directly to the backend login page
@@ -50,28 +49,58 @@ describe("games-ejs puppeteer test", function () {
     });
   });
 
-  // describe("login page test", function () {
-  //   this.timeout(20000);
-  //   it("resolves all the fields", async function () {
-  //     this.email = await page.waitForSelector('input[name="email"]');
-  //     this.password = await page.waitForSelector('input[name="password"]');
-  //     this.submit = await page.waitForSelector("button ::-p-text(login)");
-  //   });
-  //   it("sends the login", async function () {
-  //     testUser = await seed_db();
-  //     await this.email.type(testUser.email);
-  //     await this.password.type(testUserPassword);
-  //     await this.submit.click();
-  //     await page.waitForNavigation();
-  //     await page.waitForSelector(`p ::-p-text(${testUser.name} is logged on.)`);
-  //     await page.waitForSelector("a ::-p-text(change the secret)");
-  //     await page.waitForSelector('a[href="/secretWord"]');
-  //     const copyr = await page.waitForSelector("p ::-p-text(copyright)");
-  //     const copyrText = await copyr.evaluate((el) => el.textContent);
-  //     console.log("copyright text: ", copyrText);
-  //   });
-  // });
+  describe("login page test", function () {
+    this.timeout(20000000);
+    it("resolves all the fields", async function () {
+      // Navigate to the backend login page to make sure we're on the right document
+      await page.goto("http://localhost:3000/api/v1/sudoku/auth/login", {
+        waitUntil: "networkidle0",
+      });
 
+      this.email = await page.waitForSelector('input[name="email"]', {
+        timeout: 600000,
+      });
+      this.password = await page.waitForSelector('input[name="password"]', {
+        timeout: 600000,
+      });
+      // Use a stable CSS selector for the submit button
+      this.submit = await page.waitForSelector('button[type="submit"]', {
+        timeout: 600000,
+      });
+    });
+
+    it("sends the login", async function () {
+      testUser = await seed_db();
+      await this.email.type(testUser.email);
+      await this.password.type(testUserPassword);
+      /* Submit and wait for the backend JSON response. The server returns JSON
+      / for the login POST and does not perform a client-side navigation here,
+      so waiting for navigation or for a React text node will time out.
+       */
+      //Works but find a better way to do this that I understand - see not
+      const [loginResponse] = await Promise.all([
+        page.waitForResponse(
+          (resp) =>
+            resp.url().includes("/api/v1/sudoku/auth/login") &&
+            resp.request().method() === "POST"
+        ),
+        this.submit.click(),
+      ]);
+
+      const body = await loginResponse.json();
+      if (!body.user || body.user.name !== testUser.name) {
+        throw new Error(
+          `Login failed or returned wrong user: ${JSON.stringify(body)}`
+        );
+      }
+      //await page.waitForSelector(`p ::-p-text(${testUser.name} is logged on.)`);
+      // await page.waitForSelector("a ::-p-text(change the secret)");
+      // await page.waitForSelector('a[href="/secretWord"]');
+      // const copyr = await page.waitForSelector("p ::-p-text(copyright)");
+      // const copyrText = await copyr.evaluate((el) => el.textContent);
+      // console.log("copyright text: ", copyrText);
+    });
+  });
   // describe("puppeteer game operations", function () {
   //   this.timeout(1000000);
 
