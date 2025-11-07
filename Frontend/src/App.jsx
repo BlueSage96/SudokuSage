@@ -4,9 +4,11 @@ import Auth from "./Auth/Auth";
 import AppStyles from "styled-components";
 
 const Apps = AppStyles.div`
-    height: 900px;
+    height: 100vh;
+    width: 1200px;
     overflow: hidden;
     display: flex;
+    position: absolute;
     flex-direction: column;
     justify-content: center;
     align-items: center;

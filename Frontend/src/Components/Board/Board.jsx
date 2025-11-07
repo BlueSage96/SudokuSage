@@ -72,7 +72,7 @@ function Board({ gameTimer, setGameTimer }) {
         {/* <p>Status: {game.status}</p>
         <hr /> */}
         {/* <p>Time: </p> */}
-        <p>
+        <p style={{width: 100}}>
           <span className={BoardStyles.Timer}>Time:</span>
           <GameTimer gameTimer={gameTimer} setGameTimer={setGameTimer} />
         </p>
