@@ -21,4 +21,4 @@ Other: dotenv for environment management, bcrypt for password hashing
 Sudoku Sage blends logic, design, and secure web architecture to deliver an engaging puzzle experience that bridges gameplay and modern web development practices.
 
 [text] Credits:(https://github.com/BlueSage96/SudokuSage/blob/main/Frontend/README.md)
-![Sudoku Sage Screenshot](frontend/src/assets/background.jpg)
+![Sudoku Sage Screenshot](https://github.com/BlueSage96/SudokuSage/tree/main/Frontend/src/assets)
