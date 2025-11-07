@@ -1,16 +1,43 @@
 .Title {
+    display: flex;
+    position: relative;
+    /* 
     position: absolute;
     top: 48%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: auto;
-    height: 90vh;
+    transform: translate(-50%, -50%); 
+    width: 500px;
+    transform: scale(1.045);
+    */
+    width: 30vw;
+    height: 80vh;
     z-index: -1;
     border: 8px solid white;
     border-radius: 8px;
 }
 
-.Options {
+.SignIn {
+    position: absolute;
+    right: 675px;
+    top: 265px;
+    background-color: transparent !important;
+}
+
+.SignIn img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid white;
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
+    margin: 1rem;
+     
+}
+
+.SignIn:hover img {
+    border: 2px solid white;
+}
+
+/* .Options {
     display: flex;
     flex-direction: row;
     gap: 20px;
@@ -41,13 +68,8 @@
     height: 45px;
     right: 715px;
     bottom: 100px;
-}
+} */
 
-.SignIn {
-    width: 55px;
-    right: 650px;
-    bottom: 95px;
-}
 
 /* .Start {
     width: 100px;
