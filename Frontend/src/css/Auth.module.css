@@ -1,7 +1,7 @@
 .backButton { 
     position: absolute;
     font-size: 26px;
-    left: 500px; 
+    left: 450px; 
     top: 145px;
     background-color: rgb(3,3,180);
     border: 2px solid white;
@@ -16,7 +16,7 @@
     padding: 16px 12px;
     display: flex;
     position: relative;
-    left: 400px;
+    left: 350px;
     top: 100px;
     max-width: 600px;
     min-width: 400px;
