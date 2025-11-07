@@ -1,11 +1,10 @@
 import './css/App.css';
 import { Outlet, useLocation } from 'react-router-dom';
-import Auth from "./Auth/Auth";
-import AppStyles from "styled-components";
+import AppStyles from 'styled-components';
 
 const Apps = AppStyles.div`
     height: 100vh;
-    width: 1200px;
+    width: 100vw;
     overflow: hidden;
     display: flex;
     position: absolute;
@@ -15,18 +14,23 @@ const Apps = AppStyles.div`
     gap: 40px;
 `;
 
+
 function App() {
   const location = useLocation();
-  const isAuth = location.pathname.startsWith("/auth");
+  // show Apps wrapper only for game pages (e.g. /game/:id)
+  const isGame = location.pathname.startsWith('/game/:id');
+
   return (
     <>
-    {isAuth ? (<Auth/>) : (
+      {isGame ? (
         <Apps>
-        <Outlet></Outlet>
-      </Apps>
-      )}  
+          <Outlet />
+        </Apps>
+      ) : (
+        <Outlet />
+      )}
     </>
-  )
+  );
 }
 
 export default App;
