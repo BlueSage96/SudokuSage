@@ -6,12 +6,8 @@ import api from '../../Auth/Axios';
 import GameTimer from '../Game/GameTimer';
 
 function Board({ gameTimer, setGameTimer }) {
-  const squares = Array(3)
-    .fill(null)
-    .map(() => Array(3).fill(null)); //3x3
-  const numbers = Array(9)
-    .fill(null)
-    .map(() => Array(9).fill(null));
+  const squares = Array(3).fill(null).map(() => Array(3).fill(null)); //3x3
+  const numbers = Array(9).fill(null).map(() => Array(9).fill(null));
 
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -58,6 +54,7 @@ function Board({ gameTimer, setGameTimer }) {
 
   return (
     <>
+    {/* Set ternary for going back to game creation page!! */}
       <button className={BoardStyles.backButton} onClick={() => navigate(-1)}>
         &larr; Back
       </button>
@@ -72,6 +69,7 @@ function Board({ gameTimer, setGameTimer }) {
         {/* <p>Status: {game.status}</p>
         <hr /> */}
         {/* <p>Time: </p> */}
+        
         <p style={{width: 100}}>
           <span className={BoardStyles.Timer}>Time:</span>
           <GameTimer gameTimer={gameTimer} setGameTimer={setGameTimer} />
