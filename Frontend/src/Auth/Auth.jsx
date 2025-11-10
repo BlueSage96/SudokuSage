@@ -4,7 +4,7 @@ import AuthStyles from '../css/Auth.module.css';
 import LogReg from './LogReg/LoginRegister';
 import Register from './LogReg/Register';
 import Login from './LogReg/Login';
-import { ShowGames, HandleEditGames, HandleDeleteGames } from './Games/GameFunc';
+import { ShowGames, HandleEditGames } from './Games/GameFunc';
 
 export default function Auth() {
   const [message, setMessage] = useState(null);
@@ -27,7 +27,6 @@ export default function Auth() {
     setToken(value);
     if (value) {
       localStorage.setItem('token', value);
-      //setActiveView("games");
     } else {
       localStorage.removeItem('token');
       setActiveView('default');
@@ -37,7 +36,6 @@ export default function Auth() {
   useEffect(() => {
     let retrieveToken = localStorage.getItem('token');
     if (retrieveToken) {
-      //setActiveView("games");
       setToken(retrieveToken); //preserve last active view
     } else {
       setToken(null);
@@ -103,6 +101,7 @@ export default function Auth() {
               enableInput={enableInput}
               setMessage={setMessage}
               setDiv={setDiv}
+              editGameId = {editGameId}
               setEditGameId={setEditGameId}
             />
           </>
@@ -119,20 +118,6 @@ export default function Auth() {
               setDiv={setDiv}
               editGameId={editGameId}
               clearEditGameId={() => setEditGameId}
-            />
-          </>
-        )}
-
-        {activeView === 'delete' && (
-          <>
-            <h1 className={AuthStyles.EditTitle}>Delete Game</h1>
-            <HandleDeleteGames
-              inputEnabled={inputEnabled}
-              enableInput={enableInput}
-              token={token}
-              setMessage={setMessage}
-              setDiv={setDiv}
-              editGameId={editGameId}
             />
           </>
         )}
