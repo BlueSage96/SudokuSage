@@ -2,12 +2,13 @@ const puppeteer = require("puppeteer");
 require("../../app");
 const { factory, seed_db, testUserPassword } = require("../util/seed_db");
 const Game = require("../../models/Game");
+const { StatusCodes } = require("http-status-codes")
 
 let testUser = null;
-let page = null;
-let browser = null;
+let page, browser = null;
+let accessToken = null;
 
-describe("games-ejs puppeteer test", function () {
+describe("SS games puppeteer test", function () {
   before(async function () {
     this.timeout(1000000);
     browser = await puppeteer.launch();
@@ -16,7 +17,7 @@ describe("games-ejs puppeteer test", function () {
   });
 
   after(async function () {
-    this.timeout(500000);
+    this.timeout(5000000);
     await browser.close();
   });
 
@@ -26,58 +27,41 @@ describe("games-ejs puppeteer test", function () {
 
   describe("index page test", function () {
     this.timeout(1000000);
-
-    it("finds the index page heading", async function () {
+    it("finds the index page logon link", async function () {
       // Hit the backend's static index page, not the React /auth route
       await page.goto("http://localhost:3000/", { waitUntil: "networkidle0" });
       // Just make sure the page loaded and the heading is there
       await page.waitForSelector("h2", { timeout: 30000 });
     });
 
-    it("gets to the login page", async function () {
+    it("gets to the logon page", async function () {
       // Go directly to the backend login page
       await page.goto("http://localhost:3000/api/v1/sudoku/auth/login", {
         waitUntil: "networkidle0",
       });
-
       // Just check that the HTML contains the CSRF input
       const html = await page.content();
-
       if (!html.includes('name="_csrf"')) {
         throw new Error("CSRF input not found in /auth/register HTML");
       }
     });
   });
 
-  describe("login page test", function () {
-    this.timeout(20000000);
+  describe("logon page test", function () {
+    this.timeout(2000000);
     it("resolves all the fields", async function () {
-      // Navigate to the backend login page to make sure we're on the right document
-      await page.goto("http://localhost:3000/api/v1/sudoku/auth/login", {
-        waitUntil: "networkidle0",
-      });
-
-      this.email = await page.waitForSelector('input[name="email"]', {
-        timeout: 600000,
-      });
-      this.password = await page.waitForSelector('input[name="password"]', {
-        timeout: 600000,
-      });
-      // Use a stable CSS selector for the submit button
-      this.submit = await page.waitForSelector('button[type="submit"]', {
-        timeout: 600000,
-      });
+      this.email = await page.waitForSelector('input[name="email"]');
+      this.password = await page.waitForSelector('input[name="password"]');
+      this.submit = await page.waitForSelector('button[type="submit"]');
     });
 
-    it("sends the login", async function () {
+    it("sends the logon", async function () {
+      this.timeout(4000000);
       testUser = await seed_db();
       await this.email.type(testUser.email);
       await this.password.type(testUserPassword);
-      /* Submit and wait for the backend JSON response. The server returns JSON
-      / for the login POST and does not perform a client-side navigation here,
-      so waiting for navigation or for a React text node will time out.
-       */
-      //Works but find a better way to do this that I understand - see not
+
+      // Submit and wait for the backend JSON response for the login POST
       const [loginResponse] = await Promise.all([
         page.waitForResponse(
           (resp) =>
@@ -93,84 +77,192 @@ describe("games-ejs puppeteer test", function () {
           `Login failed or returned wrong user: ${JSON.stringify(body)}`
         );
       }
-      //await page.waitForSelector(`p ::-p-text(${testUser.name} is logged on.)`);
-      // await page.waitForSelector("a ::-p-text(change the secret)");
-      // await page.waitForSelector('a[href="/secretWord"]');
-      // const copyr = await page.waitForSelector("p ::-p-text(copyright)");
-      // const copyrText = await copyr.evaluate((el) => el.textContent);
-      // console.log("copyright text: ", copyrText);
+
+      // Save access token so we can call the games API directly from the browser context
+      accessToken = body.accessToken || body.token || null;
+      if (accessToken) {
+        await page.evaluate(
+          (t) => localStorage.setItem("token", t),
+          accessToken
+        );
+      }
     });
   });
-  // describe("puppeteer game operations", function () {
-  //   this.timeout(1000000);
 
-  //   it("should click on link in games list", async function () {
-  //     const { expect } = await import("chai");
-  //     this.gamesPage = await page.waitForSelector('a[href="/games/"]');
-  //     await this.gamesPage.click();
-  //     await page.waitForNavigation();
-  //     const gameEntries = await page.content();
-  //     expect(gameEntries.split("<tr>").length).to.equal(21);
-  //   });
+  describe("puppeteer game operations", function () {
+    this.timeout(10000000);
+    it("should click on link in games list", async function () {
+      const { expect } = await import("chai");
 
-  //   it("should test click on Add button", async function () {
-  //     this.difficulty = await page.waitForSelector('input[name="difficulty"]');
-  //     this.mistakes = await page.waitForSelector('input[name="mistakes"]');
-  //     this.usedHints = await page.waitForSelector('input[name="usedHints"]');
-  //     this.status = await page.waitForSelector('select[name="status"]');
+      // Call the games API directly from the browser context using the access token
+      if (!accessToken) {
+        throw new Error("No access token available from login step");
+      }
+      /*
+       * Saved the access token returned by the login POST.
+       * Stored the token in the browser localStorage (so the app can use it if needed).
+       * Direct browser-context fetch to GET /api/v1/sudoku/game using the access token, 
+       * and asserted the JSON contains games.
+       */
+      const gamesResult = await page.evaluate(async (token) => {
+        const resp = await fetch("/api/v1/sudoku/game", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+        });
 
-  //     // fill them with valid data BEFORE submit
-  //     await this.difficulty.type("Easy");
-  //     await this.mistakes.type("0");
-  //     await this.usedHints.type("0");
-  //     await this.status.select("Not started");
+        const data = await resp.json().catch(() => null);
+        return { status: resp.status, data };
+      }, accessToken);
 
-  //     this.gamesPage = await page.waitForSelector("button ::-p-text(Add)");
-  //     await this.gamesPage.click();
-  //     await page.waitForNavigation();
-  //   });
+      // Ensure API returned successfully and contains games
+      expect(gamesResult.status).to.equal(StatusCodes.OK);
+      const gamesArray = Array.isArray(gamesResult.data?.games)
+        ? gamesResult.data.games
+        : [];
+      expect(gamesArray.length).to.be.greaterThan(0);
+    });
 
-  //   it("add a game for logged in user", async function () {
-  //     const newGame = await factory.build("game");
-  //     const { expect } = await import("chai");
+   it("should test click on Add button", async function () {
+     this.timeout(60000);
 
-  //     // get initial row count BEFORE adding a new game
-  //     let beforeHtml = await page.content();
-  //     let beforeCount = beforeHtml.split("<tr>").length;
+     // 1. Go to the setup page where GameFunc renders
+     const response = await page.goto("http://localhost:3000/setup", {
+       waitUntil: "networkidle0",
+     });
 
-  //     // get fresh handles to the form fields
-  //     const difficultyInput = await page.waitForSelector(
-  //       'input[name="difficulty"]'
-  //     );
-  //     const mistakesInput = await page.waitForSelector(
-  //       'input[name="mistakes"]'
-  //     );
-  //     const usedHintsInput = await page.waitForSelector(
-  //       'input[name="usedHints"]'
-  //     );
-  //     const statusSelect = await page.waitForSelector('select[name="status"]');
+     const status = response.status();
+     if (status !== 200) {
+       const html = await page.content();
+       console.log("Unexpected status from /setup:", status);
+       console.log("HTML:\n", html);
+       throw new Error(`Expected 200 from /setup, got ${status}`);
+     }
 
-  //     // fill them
-  //     await difficultyInput.type(newGame.difficulty || "Easy");
-  //     await mistakesInput.type(String(newGame.mistakes ?? 0));
-  //     await usedHintsInput.type(String(newGame.usedHints ?? 0));
-  //     await statusSelect.select(newGame.status || "Not started");
+     // 2. Wait until there is a <button> with text exactly "Add game"
+     await page.waitForFunction(
+       () =>
+         Array.from(document.querySelectorAll("button")).some(
+           (btn) => btn.textContent.trim() === "Add game"
+         ),
+       { timeout: 10000 }
+     );
 
-  //     // submit and wait for redirect
-  //     const addButton = await page.waitForSelector("button ::-p-text(Add)");
-  //     addButton.click();
-  //     page.waitForNavigation();
+     // 3. Click the "Add game" button inside the page
+     await page.evaluate(() => {
+       const buttons = Array.from(document.querySelectorAll("button"));
+       const btn = buttons.find((b) => b.textContent.trim() === "Add game");
+       if (!btn) {
+         throw new Error("Add game button not found in evaluate()");
+       }
+       btn.click();
+     });
+   });
 
-  //     // get updated row count AFTER adding the game
-  //     let afterHtml = await page.content();
-  //     let afterCount = afterHtml.split("<tr>").length;
+   it("add a game for logged in user", async function () {
+     this.timeout(60000);
 
-  //     // assert that it increased by 1
-  //     expect(afterCount).to.be.greaterThanOrEqual(beforeCount);
+     const newGame = await factory.build("game");
+     const { expect } = await import("chai");
 
-  //     // DB check still the same
-  //     const games = await Game.find({ createdBy: testUser._id });
-  //     expect(games.length).to.be.greaterThan(0);
-  //   });
-  // });
+     // 1. Go to the setup page where the Add Game form and table are rendered
+     const response = await page.goto("http://localhost:3000/setup", {
+       waitUntil: "networkidle0",
+     });
+
+     const status = response.status();
+     if (status >= 400) {
+       const html = await page.content();
+       console.log("Unexpected status from /setup:", status);
+       console.log("HTML:\n", html);
+       throw new Error(`Expected 200 from /setup, got ${status}`);
+     }
+
+     // 2. Get initial row count BEFORE adding a new game
+     let beforeHtml = await page.content();
+     let beforeCount = (beforeHtml.match(/<tr/gi) || []).length;
+
+     // Wait until we at least have 3 input fields on the page
+     await page.waitForFunction(
+       () => document.querySelectorAll("input").length >= 3,
+       { timeout: 15000 }
+     );
+
+     // Grab all inputs and map them by position:
+     // 0 = difficulty, 1 = mistakes, 2 = usedHints
+     const inputs = await page.$$("input");
+
+     if (inputs.length < 3) {
+       const html = await page.content();
+       console.log("Expected at least 3 input fields, found:", inputs.length);
+       console.log("HTML:\n", html);
+       throw new Error("Not enough input fields on the Add Game form");
+     }
+
+     const difficultyInput = inputs[0];
+     const mistakesInput = inputs[1];
+     const usedHintsInput = inputs[2];
+
+     // Status: either by name if it exists, or just the first <select>
+     let statusSelect = await page.$('select[name="status"]');
+     if (!statusSelect) {
+       const selects = await page.$$("select");
+       if (!selects.length) {
+         const html = await page.content();
+         console.log("No <select> found for status. HTML:\n", html);
+         throw new Error("Status select not found");
+       }
+       statusSelect = selects[0];
+     }
+
+     // 4. Fill them
+     await difficultyInput.click({ clickCount: 3 });
+     await difficultyInput.type(newGame.difficulty || "Easy");
+
+     await mistakesInput.click({ clickCount: 3 });
+     await mistakesInput.type(String(newGame.mistakes ?? 0));
+
+     await usedHintsInput.click({ clickCount: 3 });
+     await usedHintsInput.type(String(newGame.usedHints ?? 0));
+
+     await statusSelect.select(newGame.status || "Not started");
+
+     // 5. Click the real "Add game" button by its visible text
+     await page.waitForFunction(
+       () => {
+         return Array.from(document.querySelectorAll("button")).some(
+           (b) => b.textContent.trim() === "Add game"
+         );
+       },
+       { timeout: 15000 }
+     );
+
+     await page.evaluate(() => {
+       const btn = Array.from(document.querySelectorAll("button")).find(
+         (b) => b.textContent.trim() === "Add game"
+       );
+       if (!btn) {
+         throw new Error("Add game button not found in evaluate()");
+       }
+       btn.click();
+     });
+
+     // Give React a moment to update the table
+     await new Promise((resolve) => setTimeout(resolve, 1500));
+
+     // 6. Get updated row count AFTER adding the game
+     let afterHtml = await page.content();
+     let afterCount = (afterHtml.match(/<tr/gi) || []).length;
+
+     // Assert that it increased
+     expect(afterCount).to.be.greaterThanOrEqual(beforeCount);
+
+     // 7. DB check: game exists for the logged-in test user
+     const games = await Game.find({ createdBy: testUser._id });
+     expect(games.length).to.be.greaterThan(0);
+   });
+ });
 });

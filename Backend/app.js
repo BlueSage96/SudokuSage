@@ -3,7 +3,9 @@ require("dotenv").config();
 require("express-async-errors");
 const express = require("express");
 const app = express();
-let mongoURL = process.env.MONGO_URI;
+
+const env = process.env.NODE_ENV || "development";
+const mongoURL = process.env.MONGO_URI;
 const cookieParser = require("cookie-parser");
 
 const csrf = require("csurf");
@@ -27,20 +29,18 @@ const gameRouter = require("./routes/game");
 const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 
-if (process.env.NODE_ENV == "test") mongoURL = process.env.MONGO_URI_TEST;
-const store = new MongoDBStore({
-  uri: mongoURL,
-  collection: "mySessions",
-});
+//if (process.env.NODE_ENV == "test") mongoURL = process.env.MONGO_URI_TEST;
+// Defer creating the MongoDB session store until after we have a successful
+// DB connection. Creating the store earlier can attempt to connect immediately
+// and surface transient/auth errors (causing intermittent test failures).
 
-store.on("error", function (error) {
-  console.log(error);
-});
+let store; // created after DB connect in start()
 
 const corsOptions = {
   origin: [
     "https://sudokusage-n773.onrender.com",
     "http://localhost:3000",
+    "http://localhost:4000",
     "http://localhost:5173",
     "http://localhost:5174",
   ],
@@ -83,36 +83,67 @@ app.get("/multiply", (req, res) => {
 });
 
 // Proxy non-API routes to React frontend dev server (for testing/development)
-if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV === "development") {
+  // 🔹 DEV → USE PROXY TO VITE
   const { createProxyMiddleware } = require("http-proxy-middleware");
   const proxyMiddleware = createProxyMiddleware({
     target: "http://localhost:5173",
     changeOrigin: true,
-    ws: true, // proxy websockets for HMR
+    ws: true,
     logLevel: "silent",
   });
-  // Only proxy routes that don't start with /api
+
   app.use((req, res, next) => {
-    if (req.path.startsWith("/api")) {
-      return next();
-    }
+    if (req.path.startsWith("/api")) return next();
     return proxyMiddleware(req, res, next);
   });
-  // Still need notFoundMiddleware for unmatched API routes
-  app.use(notFoundMiddleware);
-} else {
-  app.get("/", csrfMiddleware, (req, res) => {
-    res.render("index", { csrfToken: req.csrfToken() });
+} else if (process.env.NODE_ENV === "test") {
+  // 🔹 TEST → DO **NOT** PROXY
+  // 🔹 TEST → SERVE THE BUILT REACT APP INSTEAD OF VITE
+  const path = require("path");
+  const buildPath = path.join(__dirname, "../Frontend/dist");
+
+  app.use(express.static(buildPath));
+
+  // All non-API routes → React index.html
+  app.get("*", (req, res) => {
+    if (req.path.startsWith("/api")) return;
+    res.sendFile(path.join(buildPath, "index.html"));
   });
-  app.use(notFoundMiddleware);
+} else {
+  // 🔹 PRODUCTION → SERVE THE BUILT REACT APP
+  const path = require("path");
+  const buildPath = path.join(__dirname, "../Frontend/dist");
+
+  app.use(express.static(buildPath));
+  app.get("*", (req, res) => {
+    if (req.path.startsWith("/api")) return;
+    res.sendFile(path.join(buildPath, "index.html"));
+  });
 }
-app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 3000;
 // new
-const start = () => {
+const start = async () => {
   try {
-    require("./db/connect")(mongoURL);
+    console.log(
+      "Connecting to Mongo:",
+      mongoURL.replace(/(mongodb\+srv:\/\/)([^:]+):([^@]+)@/, "$1<user>:<password>@")
+    );
+    await connectDB(mongoURL);
+    if (env !== "test") {
+          store = new MongoDBStore({
+      uri: mongoURL,
+      collection: "mySessions",
+    });
+
+    store.on("error", function (error) {
+      console.log("Session store error:", error);
+    });
+    } else {
+      console.log("Test env: skipping MongoDB session store (using default MemoryStore).");
+    }
+
     return app.listen(port, () =>
       console.log(`Server is listening on port ${port}...`)
     );
