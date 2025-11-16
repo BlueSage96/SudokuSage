@@ -3,14 +3,16 @@ import Square from './Square';
 import { useEffect, useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import api from '../../Auth/Axios';
+import GameTimer from '../Game/GameTimer';
 
-function Board() {
+function Board({ gameTimer, setGameTimer }) {
   const squares = Array(3)
     .fill(null)
     .map(() => Array(3).fill(null)); //3x3
   const numbers = Array(9)
     .fill(null)
     .map(() => Array(9).fill(null));
+
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -33,7 +35,7 @@ function Board() {
       return;
     }
 
-    (async () => {
+    (async function () {
       try {
         const { data } = await api.get(`/game/${gameId}`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -56,12 +58,24 @@ function Board() {
 
   return (
     <>
+      <button className={BoardStyles.backButton} onClick={() => navigate(-1)}>
+        &larr; Back
+      </button>
       <div className={BoardStyles.StatsBar}>
         <p>Mode: {game.difficulty}</p>
-        <hr/>
+        <hr />
         <p>Mistakes: {game.mistakes}</p>
-        <hr/>
-        <p>Hints: {game.hints}</p>
+        <hr />
+        <p>Hints: {game.usedHints}</p>
+        <hr />
+
+        {/* <p>Status: {game.status}</p>
+        <hr /> */}
+        {/* <p>Time: </p> */}
+        <p>
+          <span className={BoardStyles.Timer}>Time:</span>
+          <GameTimer gameTimer={gameTimer} setGameTimer={setGameTimer} />
+        </p>
       </div>
 
       {/* draw grid */}

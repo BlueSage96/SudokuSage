@@ -1,9 +1,31 @@
+.backButton { 
+    position: absolute;
+    font-size: 24px;
+    left: 200px; 
+    top: 70px;
+    background-color: rgb(30,40,200);
+    border: 4px solid white;
+    border-radius: 8px;
+    padding: 8px;
+  }
+
+  .Timer {
+    position: relative;
+    right: 35px;
+  }
+
 .StatsBar {
     display: flex;
     justify-content: space-around;
     font-size: 20px;
     line-height: 28px;
-    width: 50%;
+    width: 54.5%;
+    border: 4px solid white;
+    border-radius: 8px;
+    font-weight: bold;
+    background-color: rgb(30,40,200);
+    position: relative;
+    top: 20px;
 }
 
 .Main {
@@ -33,19 +55,19 @@
 .NumContainer {
     display: flex;
     justify-content: space-around;
-    width: 56%;
+    width: 54.5%;
     gap: 14px;
-    margin: 20px;
+    margin: 0 5px;
     cursor: pointer;
 }
 
 .NumRow {
     color: white;
     background-color: rgb(30,40,200);
-    border: 2px solid white;
+    border: 4px solid white;
     border-radius: 8px;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); 
-    padding: 10px 20px;
+    padding: 15px 20px;
     font-size: 28px;
 }
 
