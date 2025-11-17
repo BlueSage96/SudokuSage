@@ -121,8 +121,7 @@ describe("SS games puppeteer test", function () {
       // Ensure API returned successfully and contains games
       expect(gamesResult.status).to.equal(StatusCodes.OK);
       const gamesArray = Array.isArray(gamesResult.data?.games)
-        ? gamesResult.data.games
-        : [];
+        ? gamesResult.data.games : [];
       expect(gamesArray.length).to.be.greaterThan(0);
     });
 
@@ -144,10 +143,8 @@ describe("SS games puppeteer test", function () {
 
      // 2. Wait until there is a <button> with text exactly "Add game"
      await page.waitForFunction(
-       () =>
-         Array.from(document.querySelectorAll("button")).some(
-           (btn) => btn.textContent.trim() === "Add game"
-         ),
+       () => Array.from(document.querySelectorAll("button")).some(
+           (btn) => btn.textContent.trim() === "Add game"),
        { timeout: 10000 }
      );
 
