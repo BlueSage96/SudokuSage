@@ -32,6 +32,10 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
     setStatus(event.target.value);
   }
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+>>>>>>> Stashed changes
   //moved from useEffect to function
   async function loadGames() {
     if (!token) return;
@@ -41,6 +45,27 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
       const response = await api.get(`/game/`, {
         headers: {
           Authorization: `Bearer ${token}`
+<<<<<<< Updated upstream
+=======
+=======
+  useEffect(() => {
+    if (!token) return; //don't fetch if not logged in
+    const handleShowGame = async function () {
+      try {
+        enableInput(false);
+        //leave this one alone!!
+        const response = await api.get(`/game/`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        const data = await response.data;
+        if (response.status === 200) {
+          setGames(data.games || []);
+        } else {
+          setMessage(data.msg);
+>>>>>>> main
+>>>>>>> Stashed changes
         }
       });
 
@@ -58,13 +83,21 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
       setDiv('games');
     }
   }
+<<<<<<< Updated upstream
+
+  // reusable function - more flexible
+  useEffect(() => {
+    loadGames();
+  }, [token]); // note: no setMessage here
+=======
+>>>>>>> Stashed changes
 
   // reusable function - more flexible
   useEffect(() => {
     loadGames();
   }, [token]); // note: no setMessage here
 
-  const addGames = async () => {
+  const addGames = async function () {
     // check for incomplete form
     if (!difficulty || mistakes === '' || hints === '' || !status) {
       setMessage('Please complete all fields.');
@@ -312,7 +345,7 @@ export function HandleEditGames({ editGameId, inputEnabled, enableInput, token, 
     if (!editGameId) return;
     let cancelled = false;
 
-    const fetchGame = async () => {
+    const fetchGame = async function () {
       setLoading(true);
       try {
         const response = await api.get(`/game/${editGameId}`, {
@@ -469,6 +502,113 @@ export function HandleEditGames({ editGameId, inputEnabled, enableInput, token, 
   );
 }
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+export function HandleDeleteGames({ inputEnabled, enableInput, token, setMessage, setDiv, editGameId }) {
+  const [difficulty, setDifficulty] = useState('Easy');
+  const [mistakes, setMistakes] = useState('0');
+  const [hints, setHints] = useState('0');
+  const [status, setStatus] = useState('Not started');
+  const deletingGameRef = useRef();
+  const deleteCancelRef = useRef();
+
+  console.log('Difficulty:' + difficulty, 'Mistakes:' + mistakes, 'Hints:' + hints, 'Status:' + status);
+
+  useEffect(() => {
+    if (!editGameId) return;
+    let cancelled = false;
+
+    const fetchGame = async function () {
+      try {
+        const response = await api.get(`/game/${editGameId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        if (cancelled) return;
+        const payload = response.data?.game || response.data;
+        setDifficulty(payload.difficulty ?? '');
+        setMistakes(Number(payload.mistakes ?? ''));
+        setHints(Number(payload.usedHints ?? ''));
+        setStatus(payload.status ?? 'Not started');
+      } catch (err) {
+        console.log(err);
+        setMessage(`Unable to delete game with id: ${editGameId}`);
+      }
+      enableInput(true);
+    };
+    fetchGame();
+    return () => (cancelled = true); //cleanup function
+  }, [editGameId, enableInput, setMessage, token]);
+
+  async function handleDeleteSubmit() {
+    if (!inputEnabled) return;
+    if (!editGameId) {
+      setMessage('No game selected to delete');
+      return;
+    }
+    enableInput(false);
+    try {
+      const response = await api.delete(`/game/${editGameId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (response.status === 200 || response.status === 201) {
+        setMessage('The game entry was deleted');
+        //clear and go back to list
+        setDifficulty('Easy');
+        setMistakes('0');
+        setHints('0');
+        setStatus('Not started');
+        setDiv('games');
+      } else {
+        const data = response.data || {}; //empty object
+        setMessage(data.msg || 'Delete failed');
+      }
+    } catch (err) {
+      console.error('Update failed', err);
+      setMessage('A communications error has occurred');
+    } finally {
+      enableInput(true);
+    }
+  }
+
+  function handleDeleteCancel() {
+    setMessage('Delete cancelled!');
+    setDiv('games');
+  }
+
+  if (!editGameId) {
+    // if no id chosen yet, either render nothing or show helpful text
+    return <p className={GFStyles.Msg}>Select a game to delete</p>;
+  }
+  return (
+    <>
+      <div className={GFStyles.DeleteGame}>
+        {/* create conditional rendering - only show when deleting use setDiv!! */}
+        <button
+          type="submit"
+          className={GFStyles.DltGame}
+          ref={deletingGameRef}
+          onClick={() => {
+            setMessage('Game has been deleted!');
+            handleDeleteSubmit();
+            // setDiv("delete");
+          }}
+        >
+          Delete
+        </button>
+        <button type="button" className={GFStyles.DeleteCancel} ref={deleteCancelRef} onClick={handleDeleteCancel}>
+          Cancel
+        </button>
+      </div>
+    </>
+  );
+}
+
+>>>>>>> main
+>>>>>>> Stashed changes
 export default function GameFunc(props) {
   //Need a functional component for routing
   return <ShowGames {...props} />;

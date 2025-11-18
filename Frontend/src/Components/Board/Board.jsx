@@ -31,7 +31,7 @@ function Board({ gameTimer, setGameTimer }) {
       return;
     }
 
-    (async () => {
+    (async function () {
       try {
         const { data } = await api.get(`/game/${gameId}`, {
           headers: { Authorization: `Bearer ${token}` },
