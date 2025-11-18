@@ -1,12 +1,41 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef} from 'react';
 import LogRegStyles from '../../css/LogReg.module.css';
 import api from '../Axios.js';
 
 export default function Login({ inputEnabled, enableInput, setDiv, setMessage, handleToken }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [csrfToken, setCsrfToken] = useState(null);
+
   const loginButtonRef = useRef();
   const loginCancelRef = useRef();
+
+  // grab CSRF token on mount (and whenever we don't have one)
+ useEffect(() => {
+   if (csrfToken) return;
+
+   async function fetchCsrf() {
+     try {
+       // This becomes: http://localhost:3000/api/v1/sudoku/auth/csrf-token
+       const response = await api.get('/auth/csrf-token', {
+         withCredentials: true // api already has this, but harmless here
+       });
+
+       const token = response.data?.csrfToken;
+       if (token) {
+         setCsrfToken(token);
+       } else {
+         console.error('No csrfToken field in /auth/csrf-token response:', response.data);
+       }
+     } catch (err) {
+       console.error('Failed to fetch CSRF token:', err);
+       // if you want, you can surface this to the UI:
+       // setMessage("Could not contact server for CSRF token");
+     }
+   }
+
+   fetchCsrf();
+ }, [csrfToken]);
 
   function handleEmail(event) {
     setEmail(event.target.value);
@@ -21,9 +50,8 @@ export default function Login({ inputEnabled, enableInput, setDiv, setMessage, h
     enableInput(false);
 
     try {
-      const response = await api.post(
-        '/auth/login',
-        { email, password },
+      // include csrf when logging in
+      const response = await api.post('/auth/login',{ email, password, _csrf: csrfToken },
         {
           headers: {
             'Content-Type': 'application/json'
@@ -48,7 +76,8 @@ export default function Login({ inputEnabled, enableInput, setDiv, setMessage, h
         status: err.response?.status,
         data: err.response?.data
       });
-      setMessage(err.response?.data?.msg || err.response?.data?.error || 'Login failed');
+      setMessage(err.response?.data?.msg || err.response?.data?.error || 
+        (err.response?.status === 403 ? 'Login blocked: missing or invalid CSRF token': 'Login failed'));
     }
     enableInput(true);
   }
@@ -89,7 +118,9 @@ export default function Login({ inputEnabled, enableInput, setDiv, setMessage, h
             <input type="password" className={LogRegStyles.Pwd1} value={password} onChange={handlePassword} />{' '}
           </div>{' '}
           <div style={{ display: 'flex' }}>
-            <button type="button" className={LogRegStyles.LoginBtn} ref={loginButtonRef} onClick={showLogin}>
+            {/* Don't submit until user has CSRF token */}
+            <button type="button" className={LogRegStyles.LoginBtn} ref={loginButtonRef} 
+            onClick={showLogin}>
               Login
             </button>{' '}
             <button type="button" className={LogRegStyles.LoginCancel} ref={loginCancelRef} onClick={handleCancel}>
