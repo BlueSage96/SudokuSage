@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef} from 'react';
+import { useState, useRef, useEffect } from 'react';
 import LogRegStyles from '../../css/LogReg.module.css';
 import api from '../Axios.js';
 
@@ -10,33 +10,60 @@ export default function Login({ inputEnabled, enableInput, setDiv, setMessage, h
   const loginButtonRef = useRef();
   const loginCancelRef = useRef();
 
-  // grab CSRF token on mount (and whenever we don't have one)
- useEffect(() => {
-   if (csrfToken) return;
+  // 1. grab CSRF token on mount (and whenever we don't have one)
+  // useEffect(() => {
+  //   // only fetch if we don't already have one
+  //   if (csrfToken) return;
 
-   async function fetchCsrf() {
-     try {
-       // This becomes: http://localhost:3000/api/v1/sudoku/auth/csrf-token
-       const response = await api.get('/auth/csrf-token', {
-         withCredentials: true // api already has this, but harmless here
-       });
+  //   async function fetchCsrf() {
+  //     try {
+  //       // this hits GET /api/v1/sudoku/auth/login
+  //       // backend responds with an HTML form string that includes the CSRF token
+  //       const res = await api.get('/auth/csrf-token', {
+  //         // backend sends html, not json
+  //         withCredentials: true
+  //       });
 
-       const token = response.data?.csrfToken;
-       if (token) {
-         setCsrfToken(token);
-       } else {
-         console.error('No csrfToken field in /auth/csrf-token response:', response.data);
-       }
-     } catch (err) {
-       console.error('Failed to fetch CSRF token:', err);
-       // if you want, you can surface this to the UI:
-       // setMessage("Could not contact server for CSRF token");
-     }
-   }
+  //       const html = res.data || '';
+  //       // same pattern your tests use:
+  //       // _csrf" value="<token>"
+  //       const match = /_csrf\" value=\"(.*?)\"/.exec(html.replaceAll('\n', ''));
+  //       if (match && match[1]) {
+  //         setCsrfToken(match[1]);
+  //       } else {
+  //         console.error('Could not extract CSRF token from /auth/login response');
+  //       }
+  //     } catch (err) {
+  //       console.error('Failed to fetch CSRF token:', err);
+  //     }
+  //   }
 
-   fetchCsrf();
- }, [csrfToken]);
+  //   fetchCsrf();
+  // }, [csrfToken]);
 
+  useEffect(() => {
+    if (csrfToken) return;
+
+    async function fetchCsrf() {
+      try {
+        // Use the JSON CSRF endpoint - NOT /auth/login or /auth/register
+        const response = await api.get('/auth/csrf-token', {
+          withCredentials: true
+        });
+
+        const token = response.data?.csrfToken;
+        if (token) {
+          setCsrfToken(token);
+        } else {
+          console.error('No csrfToken field in /auth/csrf-token response:', response.data);
+        }
+      } catch (err) {
+        console.error('Failed to fetch CSRF token:', err);
+      }
+    }
+
+    fetchCsrf();
+  }, [csrfToken]);
   function handleEmail(event) {
     setEmail(event.target.value);
   }
@@ -50,8 +77,14 @@ export default function Login({ inputEnabled, enableInput, setDiv, setMessage, h
     enableInput(false);
 
     try {
-      // include csrf when logging in
-      const response = await api.post('/auth/login',{ email, password, _csrf: csrfToken },
+      // 2. include _csrf when logging in
+      const response = await api.post(
+        '/auth/login',
+        {
+          email,
+          password,
+          _csrf: csrfToken
+        },
         {
           headers: {
             'Content-Type': 'application/json'
@@ -59,11 +92,16 @@ export default function Login({ inputEnabled, enableInput, setDiv, setMessage, h
           withCredentials: true
         }
       );
+
       const data = await response.data;
+
       if (response.status === 200) {
         setMessage(`Login successful. Welcome ${data.user.name}!`);
 
+        // save token for authenticated routes
         handleToken(data.accessToken || data.token);
+
+        // reset inputs + show games view
         setEmail('');
         setPassword('');
         setDiv('games');
@@ -71,14 +109,19 @@ export default function Login({ inputEnabled, enableInput, setDiv, setMessage, h
         setMessage(data.msg || 'An error has occurred');
       }
     } catch (err) {
-      //defensive reads (optional chaining/fallback)
       console.error('Login error:', {
         status: err.response?.status,
         data: err.response?.data
       });
-      setMessage(err.response?.data?.msg || err.response?.data?.error || 
-        (err.response?.status === 403 ? 'Login blocked: missing or invalid CSRF token': 'Login failed'));
+
+      // this is where you were hitting 403 Forbidden
+      setMessage(
+        err.response?.data?.msg ||
+          err.response?.data?.error ||
+          (err.response?.status === 403 ? 'Login blocked: missing or invalid CSRF token' : 'Login failed')
+      );
     }
+
     enableInput(true);
   }
 
@@ -93,6 +136,7 @@ export default function Login({ inputEnabled, enableInput, setDiv, setMessage, h
   function showLogin() {
     handleLogin();
   }
+
   return (
     <>
       <div className={LogRegStyles.LoginDiv}>
@@ -118,9 +162,13 @@ export default function Login({ inputEnabled, enableInput, setDiv, setMessage, h
             <input type="password" className={LogRegStyles.Pwd1} value={password} onChange={handlePassword} />{' '}
           </div>{' '}
           <div style={{ display: 'flex' }}>
-            {/* Don't submit until user has CSRF token */}
-            <button type="button" className={LogRegStyles.LoginBtn} ref={loginButtonRef} 
-            onClick={showLogin}>
+            <button
+              type="button"
+              className={LogRegStyles.LoginBtn}
+              ref={loginButtonRef}
+              onClick={showLogin}
+              // disabled={!csrfToken} // don't let them submit before we have the CSRF
+            >
               Login
             </button>{' '}
             <button type="button" className={LogRegStyles.LoginCancel} ref={loginCancelRef} onClick={handleCancel}>
