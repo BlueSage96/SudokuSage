@@ -32,10 +32,6 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
     setStatus(event.target.value);
   }
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
->>>>>>> Stashed changes
   //moved from useEffect to function
   async function loadGames() {
     if (!token) return;
@@ -45,9 +41,6 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
       const response = await api.get(`/game/`, {
         headers: {
           Authorization: `Bearer ${token}`
-<<<<<<< Updated upstream
-=======
-=======
   useEffect(() => {
     if (!token) return; //don't fetch if not logged in
     const handleShowGame = async function () {
@@ -64,8 +57,6 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
           setGames(data.games || []);
         } else {
           setMessage(data.msg);
->>>>>>> main
->>>>>>> Stashed changes
         }
       });
 
@@ -83,14 +74,11 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
       setDiv('games');
     }
   }
-<<<<<<< Updated upstream
 
   // reusable function - more flexible
   useEffect(() => {
     loadGames();
   }, [token]); // note: no setMessage here
-=======
->>>>>>> Stashed changes
 
   // reusable function - more flexible
   useEffect(() => {
@@ -502,10 +490,6 @@ export function HandleEditGames({ editGameId, inputEnabled, enableInput, token, 
   );
 }
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-=======
 export function HandleDeleteGames({ inputEnabled, enableInput, token, setMessage, setDiv, editGameId }) {
   const [difficulty, setDifficulty] = useState('Easy');
   const [mistakes, setMistakes] = useState('0');
@@ -607,8 +591,6 @@ export function HandleDeleteGames({ inputEnabled, enableInput, token, setMessage
   );
 }
 
->>>>>>> main
->>>>>>> Stashed changes
 export default function GameFunc(props) {
   //Need a functional component for routing
   return <ShowGames {...props} />;
