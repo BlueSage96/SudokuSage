@@ -41,22 +41,6 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
       const response = await api.get(`/game/`, {
         headers: {
           Authorization: `Bearer ${token}`
-  useEffect(() => {
-    if (!token) return; //don't fetch if not logged in
-    const handleShowGame = async function () {
-      try {
-        enableInput(false);
-        //leave this one alone!!
-        const response = await api.get(`/game/`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        const data = await response.data;
-        if (response.status === 200) {
-          setGames(data.games || []);
-        } else {
-          setMessage(data.msg);
         }
       });
 
@@ -74,11 +58,6 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
       setDiv('games');
     }
   }
-
-  // reusable function - more flexible
-  useEffect(() => {
-    loadGames();
-  }, [token]); // note: no setMessage here
 
   // reusable function - more flexible
   useEffect(() => {
@@ -136,7 +115,7 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
       return;
     }
 
-    if (!confirm('Are you sure you want to delete this game?')) return //browser drop down
+    if (!confirm('Are you sure you want to delete this game?')) return; //browser drop down
     enableInput(false);
     try {
       const response = await api.delete(`/game/${gameId}`, {

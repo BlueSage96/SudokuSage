@@ -9,15 +9,6 @@ function Board({ gameTimer, setGameTimer }) {
   const squares = Array(3).fill(null).map(() => Array(3).fill(null)); //3x3
   const numbers = Array(9).fill(null).map(() => Array(9).fill(null));
 
-
-function Board({ gameTimer, setGameTimer }) {
-  const squares = Array(3)
-    .fill(null)
-    .map(() => Array(3).fill(null)); //3x3
-  const numbers = Array(9)
-    .fill(null)
-    .map(() => Array(9).fill(null));
-
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -80,7 +71,6 @@ function Board({ gameTimer, setGameTimer }) {
         {/* <p>Time: </p> */}
         
         <p style={{width: 100}}>
-        <p>
           <span className={BoardStyles.Timer}>Time:</span>
           <GameTimer gameTimer={gameTimer} setGameTimer={setGameTimer} />
         </p>
