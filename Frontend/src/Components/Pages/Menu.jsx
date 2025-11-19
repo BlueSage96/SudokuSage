@@ -34,8 +34,8 @@ function Menu() {
     <>
       <img src={BG} className={MenuStyles.Title} alt="Background image" />
       <div className={MenuStyles.Options}>
-        <Buttons onClick={handleAuth}>
-          <img src={SignIn} className={MenuStyles.SignIn} alt="Sign in button" />
+        <Buttons onClick={handleAuth} className={MenuStyles.SignIn}>
+          <img src={SignIn} alt="Sign in button" />
         </Buttons>
       </div>
     </>

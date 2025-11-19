@@ -4,7 +4,7 @@ import GFStyles from '../../css/GameFunc.module.css';
 import api from '../Axios.js';
 import Logout from '../LogReg/Logout';
 
-export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToken, setMessage, setEditGameId }) {
+export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToken, setMessage, editGameId, setEditGameId }) {
   const [games, setGames] = useState([]);
   const [difficulty, setDifficulty] = useState('Easy');
   const [mistakes, setMistakes] = useState('0');
@@ -32,32 +32,37 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
     setStatus(event.target.value);
   }
 
-  useEffect(() => {
-    if (!token) return; //don't fetch if not logged in
-    const handleShowGame = async function () {
-      try {
-        enableInput(false);
-        //leave this one alone!!
-        const response = await api.get(`/game/`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        const data = await response.data;
-        if (response.status === 200) {
-          setGames(data.games || []);
-        } else {
-          setMessage(data.msg);
+  //moved from useEffect to function
+  async function loadGames() {
+    if (!token) return;
+
+    try {
+      enableInput(false);
+      const response = await api.get(`/game/`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      } catch (err) {
-        console.log(err);
-        setMessage('A communications error has occurred');
+      });
+
+      const data = response.data;
+      if (response.status === 200) {
+        setGames(data.games || []);
+      } else {
+        setMessage(data.msg);
       }
+    } catch (err) {
+      console.log(err);
+      setMessage('A communications error has occurred');
+    } finally {
       enableInput(true);
       setDiv('games');
-    };
-    handleShowGame();
-  }, [setMessage, token]); //enableInput and setDiv causes problems in depend array!
+    }
+  }
+
+  // reusable function - more flexible
+  useEffect(() => {
+    loadGames();
+  }, [token]); // note: no setMessage here
 
   const addGames = async function () {
     // check for incomplete form
@@ -83,7 +88,7 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
       if (response.status === 200 || response.status === 201) {
         // refreshes game list
         const created = response.data.game;
-        setGames((prev) => [created, ...prev]);
+        setGames((prev) => [...prev, created]);
 
         setMessage('Game has been created!');
         setDifficulty('Easy');
@@ -95,7 +100,6 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
         setDiv('games');
       } else {
         setMessage('The games entry was not found'); //add data.msg
-        // setDiv("games");
       }
     } catch (err) {
       console.log(err);
@@ -103,6 +107,40 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
     }
     enableInput(true);
   };
+
+  async function handleDeleteSubmit(gameId) {
+    if (!inputEnabled) return;
+    if (!gameId) {
+      setMessage('No game selected to delete');
+      return;
+    }
+
+    if (!confirm('Are you sure you want to delete this game?')) return; //browser drop down
+    enableInput(false);
+    try {
+      const response = await api.delete(`/game/${gameId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (response.status === 200) {
+        setMessage('The game entry was deleted');
+        await loadGames();
+        // Optional: reset the form
+        setDifficulty('Easy');
+        setMistakes('0');
+        setHints('0');
+        setStatus('Not started');
+      } else {
+        const data = response.data || {}; //empty object
+        console.log('Data:', data);
+        setMessage(data.msg || 'Delete failed');
+      }
+    } catch (err) {
+      console.error('Update failed', err);
+      setMessage('A communications error has occurred');
+    } finally {
+      enableInput(true);
+    }
+  }
 
   return (
     <>
@@ -146,14 +184,7 @@ export function ShowGames({ inputEnabled, enableInput, setDiv, token, handleToke
                   </td>
                   {/* change to dlt at certain screen sizes!! 500-600px */}
                   <td>
-                    <button
-                      type="button"
-                      className={GFStyles.DeleteBtnTB}
-                      onClick={() => {
-                        setEditGameId(game._id);
-                        setTimeout(() => setDiv('delete'), 0);
-                      }}
-                    >
+                    <button type="button" className={GFStyles.DeleteBtnTB} onClick={() => handleDeleteSubmit(game._id)}>
                       {' '}
                       delete{' '}
                     </button>
