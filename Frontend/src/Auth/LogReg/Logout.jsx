@@ -16,7 +16,7 @@ export default function Logout({
     enableInput(false);
 
     try {
-      const response = await api.post("auth/logout", {
+      const response = api.post("auth/logout", {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
