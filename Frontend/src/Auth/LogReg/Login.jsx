@@ -11,44 +11,15 @@ export default function Login({ inputEnabled, enableInput, setDiv, setMessage, h
   const loginCancelRef = useRef();
 
   // 1. grab CSRF token on mount (and whenever we don't have one)
-  // useEffect(() => {
-  //   // only fetch if we don't already have one
-  //   if (csrfToken) return;
-
-  //   async function fetchCsrf() {
-  //     try {
-  //       // this hits GET /api/v1/sudoku/auth/login
-  //       // backend responds with an HTML form string that includes the CSRF token
-  //       const res = await api.get('/auth/csrf-token', {
-  //         // backend sends html, not json
-  //         withCredentials: true
-  //       });
-
-  //       const html = res.data || '';
-  //       // same pattern your tests use:
-  //       // _csrf" value="<token>"
-  //       const match = /_csrf\" value=\"(.*?)\"/.exec(html.replaceAll('\n', ''));
-  //       if (match && match[1]) {
-  //         setCsrfToken(match[1]);
-  //       } else {
-  //         console.error('Could not extract CSRF token from /auth/login response');
-  //       }
-  //     } catch (err) {
-  //       console.error('Failed to fetch CSRF token:', err);
-  //     }
-  //   }
-
-  //   fetchCsrf();
-  // }, [csrfToken]);
-
   useEffect(() => {
     if (csrfToken) return;
 
     async function fetchCsrf() {
       try {
         // Use the JSON CSRF endpoint - NOT /auth/login or /auth/register
+        // backend responds with an HTML form string that includes the CSRF token
         const response = await api.get('/auth/csrf-token', {
-          withCredentials: true
+          withCredentials: true //backend sends html, json
         });
 
         const token = response.data?.csrfToken;
@@ -64,6 +35,7 @@ export default function Login({ inputEnabled, enableInput, setDiv, setMessage, h
 
     fetchCsrf();
   }, [csrfToken]);
+  
   function handleEmail(event) {
     setEmail(event.target.value);
   }
