@@ -1,0 +1,10 @@
+.Background {
+    display: flex;
+    position: absolute;
+    top: 5px;
+    left: 450px;
+    width: 45vw;
+    height: 99vh;
+    border: 6px solid black;
+    border-radius: 8px;
+}
