@@ -1,0 +1,202 @@
+.Background {
+    display: flex;
+    position: absolute;
+    top: 5px;
+    right: 450px;
+    width: 45vw;
+    height: 99vh;
+    border: 6px solid black;
+    border-radius: 8px;
+    z-index: -1;
+}
+
+.SignIn {
+    width: 75px;
+    position: absolute;
+    top: 255px;
+    right: 538px;
+    border: 4px solid black;
+    border-radius: 40px;
+}
+
+.SignIn:hover {
+    cursor: pointer;
+    border: 2px solid black;
+}
+
+@media screen and (min-width: 1600px) and (max-width: 1700px) {
+    .Background {
+        width: 50vw;
+    }
+
+    .SignIn {
+        width: 65px;
+        right: 525px;
+        top: 255px;
+    }
+}
+
+@media screen and (min-width: 1500px) and (max-width: 1600px) {
+    .Background {
+        width: 50vw;
+    }
+
+    .SignIn {
+        width: 65px;
+        right: 520px;
+        top: 260px;
+    }
+}
+
+@media screen and (min-width: 1400px) and (max-width: 1500px) {
+    .Background {
+        width: 55vw;
+    }
+
+    .SignIn {
+        width: 65px;
+        right: 520px;
+        top: 265px;
+    }
+}
+
+@media screen and (min-width: 1300px) and (max-width: 1400px) {
+    .Background {
+        width: 55vw;
+    }
+    
+    .SignIn {
+        width: 65px;
+        right: 515px;
+        top: 270px;
+    }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1300px) {
+    .Background {
+        width: 55vw;
+    }
+
+    .SignIn {
+        width: 60px;
+        right: 520px;
+        top: 270px;
+    }
+}
+
+@media screen and (min-width: 1100px) and (max-width: 1200px) {
+    .Background {
+        width: 60vw;
+        right: 300px
+    }
+
+    .SignIn {
+        width: 60px;
+        right: 510px;
+        top: 270px;
+    }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1100px) {
+    .Background {
+        width: 60vw;
+        left: 275px;
+    }
+
+    .SignIn {
+        width: 60px;
+        right: 235px;
+        top: 270px;
+    }
+}
+
+@media screen and (min-width: 900px) and (max-width: 1000px) {
+    .Background {
+        width: 65vw;
+        left: 230px;
+    }
+
+    .SignIn {
+        width: 60px;
+        right: 180px;
+        top: 270px;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 900px) {
+    .Background {
+        width: 65vw;
+        left: 200px;
+    }
+
+    .SignIn {
+        width: 60px;
+        right: 175px;
+        top: 270px;
+    }
+}
+
+@media screen and (min-width: 700px) and (max-width: 800px) {
+    .Background {
+        width: 70vw;
+        left: 150px;
+    }
+    
+    .SignIn {
+        width: 60px;
+        right: 145px;
+        top: 270px;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 700px) {
+    .Background {
+        width: 75vw;
+        left: 150px;
+    }
+
+    .SignIn {
+        width: 60px;
+        right: 90px;
+        top: 270px;
+    }
+}
+
+@media screen and (min-width: 500px) and (max-width: 600px) {
+    .Background {
+        width: 80vw;
+        left: 75px;
+    }
+
+    .SignIn {
+        width: 55px;
+        right: 95px;
+        top: 270px;
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 500px) {
+    .Background {
+        width: 85vw;
+        left: 50px;
+    }
+    
+    .SignIn {
+        width: 50px;
+        right: 85px;
+        top: 280px;
+    }
+}
+
+@media screen and (min-width: 300px) and (max-width: 400px) {
+    .Background {
+        width: 90vw;
+        left: 25px;
+    }
+
+    .SignIn {
+        width: 50px;
+        right: 65px;
+        top: 280px;
+    }
+}
