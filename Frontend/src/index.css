@@ -5,5 +5,11 @@
 }
 
 @layer components {
-  
+  .form-gui {
+    @apply border-2 border-black rounded-lg mb-2 placeholder:text-center
+  }
+
+  .btn-style-1 {
+     @apply border-2 border-black p-2 cursor-pointer mb-2 underline
+  }
 }
