@@ -1,4 +1,4 @@
-import LogReg from "./LogReg";
+import LogReg from "./LogReg/LogReg";
 export default function Auth () {
     return (
      <>
