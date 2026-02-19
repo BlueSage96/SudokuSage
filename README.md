@@ -1,4 +1,6 @@
 Currently being rewritten. Please refer to previous repo for now: 
+https://github.com/BlueSage96/OldSudokuSage
+
 # SudokuSage
 
 DESCRIPTION:
