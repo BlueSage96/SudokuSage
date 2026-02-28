@@ -5,5 +5,22 @@
 }
 
 @layer components {
-  
+  .form-gui {
+    @apply flex border-2 border-black rounded-lg placeholder:text-center 
+  }
+
+  .btn-style-1 {
+     @apply border-2 border-black p-2 mb-2
+  }
+
+  .btn-style-1:hover {
+    @apply cursor-pointer bg-blue-400
+  }
+   .btn-style-2 {
+     @apply border-2 border-black p-2 mt-1
+  }
+
+  .btn-style-2:hover {
+    @apply bg-red-500 cursor-pointer
+  }
 }
