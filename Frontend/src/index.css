@@ -5,73 +5,36 @@
       /* Default theme */
       --primary-background-color: #fff;
       --secondary-background-color:#f7f7f7;
-      
       --primary-text-color:#000;
-      --secondary-text-color:#4b4c53;
+      --input-bg: #f3f4f6;
+      --input-text: #000;
+      --input-border: #000;
 
-      --primary-border-color:#4b4c53;
-
-      --button-solid-background-color:#000;
-      --button-solid-text-color:#fff;
-
-      --button-outlined-background-color:transparent;
-      --button-outlined-text-color:#000;
-
-      --alert-color:#FFF9E7;
-      --alert-border-color:#FFBF00;
-      --alert-text-color:#b8952f;
-
-      --input-background-color: #ffffff;
-      --input-text-color: #000;
-      --input-placeholder-color: #6b7280;
    }
 
    :root[data-theme="dark"]{
     --primary-background-color: #1f2028;
     --secondary-background-color:#2e3039;
-
-    --primary-text-color:rgba(255, 255, 255, 0.87);
-    --secondary-text-color:#4b4c53;
-
-    --primary-border-color:#000214;
-
-    --button-solid-background-color:#fff;
-    --button-solid-text-color:#000;
-
-    --button-outlined-background-color:transparent;
-    --button-outlined-text-color:#fff;
+    --primary-text-color:rgba(255, 255, 255);
+    --input-bg: #374461;
+    --input-text: #fff;
   }
 
   :root[data-theme="blue"]{
     --primary-background-color: rgba(24, 16, 255, 1);
-    --secondary-background-color:rgba(4, 16, 140, 1);
-
-    --primary-text-color:rgba(255, 255, 255, 0.87);
-    --secondary-text-color:#3336ff;
-
+    --secondary-background-color:rgba(14, 16, 240, 1);
     --primary-border-color:#059bff;
-
-    --button-solid-background-color:#fff;
-    --button-solid-text-color:#000;
-
-    --button-outlined-background-color:transparent;
-    --button-outlined-text-color:#fff;
+    --primary-text-color:rgba(255, 255, 255, 0.87);
+    --input-bg: #1e3a8a;
+    --input-text: #fff;
   }
 
   :root[data-theme="red"]{
     --primary-background-color: rgba(255, 0, 0, 1);
     --secondary-background-color:rgb(233, 53, 37);
-
-    --primary-text-color:rgba(255, 255, 255, 0.87);
-    --secondary-text-color:#3336ff;
-
-    --primary-border-color:#059bff;
-
-    --button-solid-background-color:#fff;
-    --button-solid-text-color:#000;
-
-    --button-outlined-background-color:transparent;
-    --button-outlined-text-color:#fff;
+    --primary-text-color:rgba(255, 255, 255);
+    --input-bg: #991b1b;
+    --input-text: #fff;
   }
   
     html {
@@ -96,9 +59,9 @@
 @layer components {
    .form-gui {
     @apply flex border-2 border-black rounded-lg;
-    background-color: var (--primary-background-color);
-    border-color: var(--primary-border-color);
-    color: var(--input-text-color);
+    background-color: var (--input-bg);
+    border-color: var(--input-border);
+    color: var(--input-text);
 
     background-color: var(--primary-background-color);
     border-color:var(--primary-border-color);
@@ -107,7 +70,6 @@
 
   .form-gui::placeholder {
     color: var(--input-placeholder-color);
-   
    @apply text-center
   }
       
@@ -118,7 +80,7 @@
   }
 
   .theme-options {
-  @apply bg-[var(--secondary-background-color)] 
+  @apply bg-[var(--primary-background-color)] 
           border-[var(--secondary-border-color)] 
           text-[var(--secondary-text-color)]
 }
