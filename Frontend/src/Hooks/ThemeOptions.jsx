@@ -7,7 +7,7 @@ const ThemeOption = ({ bg, border, theme }) => {
 
   return (
     <div
-      className="theme-option"
+      className="theme-option mb-1"
       style={{ backgroundColor: bg, borderColor: border }}
       onClick={() => changeTheme(theme)}
       title={theme}
