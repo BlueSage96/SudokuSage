@@ -22,13 +22,7 @@ export default function LogReg () {
         </div>
         
         {/* Below is "truthy" because of the useState init value */}
-        {makeForm === "signup" ? (
-         <Register/>
-        ) : (
-          <form>
-            <Login/>
-          </form>
-        )}
+        {makeForm === "signup" ? (<Register/>) : (<Login/>)}
       </>
     );
 
