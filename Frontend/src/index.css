@@ -1,23 +1,128 @@
 @import "tailwindcss";
 
 @layer base {
+   :root {
+      /* Default theme */
+      --primary-background-color: #fff;
+      --secondary-background-color:#f7f7f7;
+      --primary-text-color:#000;
+      --input-bg: #f3f4f6;
+      --input-text: #000;
+      --input-border: #000;
+   }
 
+   :root[data-theme="dark"]{
+    --primary-background-color: #000;
+    --secondary-background-color:#2e3039;
+    --primary-border-color:#fff;
+    --primary-text-color:rgba(255, 255, 255);
+    --input-bg: #262e3e;
+    --input-text: #fff;
+  }
+
+  :root[data-theme="blue"]{
+    --primary-background-color: rgba(24, 16, 255, 1);
+    --secondary-background-color:rgba(14, 16, 240, 1);
+    --primary-border-color:#fff;
+    --primary-text-color:rgba(255, 255, 255, 0.87);
+    --input-bg: #094bff;
+    --input-text: #fff;
+  }
+
+  :root[data-theme="red"]{
+    --primary-background-color: rgba(255, 0, 0, 1);
+    --secondary-background-color:rgb(233, 53, 37);
+    --primary-border-color:#000;
+    --primary-text-color:rgba(255, 255, 255);
+    --input-bg: #dc0404;
+    --input-text: #fff;
+  }
+
+  :root[data-theme="green"]{
+    --primary-background-color: rgb(0, 87, 29);
+    --secondary-background-color:rgb(3, 220, 144);
+    --primary-border-color:#fff;
+    --primary-text-color:rgba(255, 255, 255);
+    --input-bg: #197d16;
+    --input-text: #fff;
+  }
+
+  :root[data-theme="purple"]{
+    --primary-background-color: rgb(126, 0, 138);
+    --secondary-background-color:rgb(194, 63, 255);
+    --primary-border-color:#fff;
+    --primary-text-color:rgba(255, 255, 255);
+    --input-bg: #8e2791;
+    --input-text: #fff;
+  }
+
+    :root[data-theme="orange"]{
+    --primary-background-color: rgb(255, 85, 0);
+    --secondary-background-color:rgb(251, 130, 0);
+    --primary-border-color:#000;
+    --primary-text-color:rgba(255, 255, 255);
+    --input-bg: #ff852f;
+    --input-text: #fff;
+  }
+  
+  html {
+    background-color: var(--primary-background-color);
+    transition: background-color 0.3s ease;
+  }
+
+  body {
+    @apply m-0 p-0 h-full w-full;
+    background-color: var(--primary-background-color);
+    transition: background-color 0.3s ease;
+  }
 }
 
 @layer components {
-  .form-gui {
-    @apply flex border-2 border-black rounded-lg placeholder:text-center 
+   .form-gui {
+    @apply flex w-full rounded-xl px-4 text-2xl;
+    background-color: var(--input-bg);
+    border-color: var(--primary-border-color);
+    color: var(--primary-text-color);
+  }
+
+  .form-gui::placeholder {
+    color: var(--input-placeholder-color);
+   @apply text-center;
+  }
+
+  .card-container {
+    @apply flex w-full max-w-lg border-2 rounded-xl p-4 sm:p-10;
+  }
+      
+  .card-themed {
+    @apply bg-[var(--primary-background-color)] 
+           border-[var(--primary-border-color)] 
+           text-[var(--primary-text-color)]
+  }
+
+.theme-options {
+  @apply bg-[var(--primary-background-color)] 
+          border-[var(--primary-border-color)] 
+          text-[var(--secondary-text-color)]
+}
+
+.no-theme {
+    background-color: initial !important;
+    color: initial !important;
   }
 
   .btn-style-1 {
-     @apply border-2 border-black p-2 mb-2
+     @apply border-2 p-2 mb-2 rounded-lg
+      border-[var(--primary-border-color)] 
   }
 
   .btn-style-1:hover {
     @apply cursor-pointer bg-blue-400
   }
+
    .btn-style-2 {
-     @apply border-2 border-black p-2 mt-1
+     @apply border-2 p-2 mt-1 rounded-lg
+      border-[var(--primary-border-color)] 
   }
 
   .btn-style-2:hover {

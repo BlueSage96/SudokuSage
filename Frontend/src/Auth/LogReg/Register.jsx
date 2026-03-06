@@ -1,11 +1,11 @@
 import { Card, TextInput, Label, Button } from "flowbite-react";
 export default function Register() {
     return (
-      <div className="flex items-center justify-center mt-2">
-        <Card className="placeholder:text-white flex max-w-md border-2 border-black rounded-lg p-2">
-          <form className="flex max-w-md flex-col gap-2 items-center">
+      <div className="flex items-center justify-center px-4 py-2">
+        <Card className="card-themed card-container border-2">
+          <form className="flex w-full flex-col gap-6">
             {/* Username for greeting after successful login */}
-            <Label htmlFor="username">Username:</Label>
+            <Label className="text-2xl font-semibold" htmlFor="username">Username:</Label>
             <TextInput
               type="text"
               placeholder="Username"
@@ -13,13 +13,13 @@ export default function Register() {
               theme={{
                 field: {
                   input: {
-                    base: "form-gui",
+                    base: "form-gui border-2 h-14",
                   },
                 },
               }}
             />
 
-            <Label htmlFor="username">Email:</Label>
+            <Label className="text-2xl font-semibold" htmlFor="username">Email:</Label>
             <TextInput
               type="text"
               placeholder="Email"
@@ -27,12 +27,12 @@ export default function Register() {
               theme={{
                 field: {
                   input: {
-                    base: "form-gui",
+                    base: "form-gui border-2 h-14",
                   },
                 },
               }}
             />
-            <Label htmlFor="username">Password:</Label>
+            <Label className="text-2xl font-semibold" htmlFor="username">Password:</Label>
             <TextInput
               type="text"
               placeholder="Password"
@@ -40,7 +40,7 @@ export default function Register() {
               theme={{
                 field: {
                   input: {
-                    base: "form-gui",
+                    base: "form-gui border-2 h-14",
                   },
                 },
               }}
@@ -52,12 +52,12 @@ export default function Register() {
               theme={{
                 field: {
                   input: {
-                    base: "form-gui",
+                    base: "form-gui border-2 h-14",
                   },
                 },
               }}
             />
-            <Button className="btn-style-2">Submit</Button>
+            <Button className="btn-style-2 py-4 text-2xl font-semibold">Submit</Button>
           </form>
         </Card>
       </div>
