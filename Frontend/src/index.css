@@ -72,6 +72,17 @@
     transition: background-color 0.3s ease;
   }
 
+  html:not(.menu-active) {
+  background-color: var(--primary-background-color);
+  transition: background-color 0.3s ease;
+}
+
+body:not(.menu-active) {
+  @apply m-0 p-0 h-full w-full;
+  background-color: var(--primary-background-color);
+  transition: background-color 0.3s ease;
+}
+
   /* #app {
     @apply h-full min-h-screen;
     background-color: var(--primary-background-color);
