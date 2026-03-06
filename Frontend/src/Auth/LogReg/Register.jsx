@@ -2,7 +2,7 @@ import { Card, TextInput, Label, Button } from "flowbite-react";
 export default function Register() {
     return (
       <div className="flex items-center justify-center mt-2">
-        <Card className="card-themed placeholder:text-white flex max-w-md border-2 border-black rounded-lg p-2">
+        <Card className="card-themed card-container border-2">
           <form className="flex max-w-md flex-col gap-2 items-center">
             {/* Username for greeting after successful login */}
             <Label htmlFor="username">Username:</Label>
@@ -13,7 +13,7 @@ export default function Register() {
               theme={{
                 field: {
                   input: {
-                    base: "form-gui",
+                    base: "form-gui border-2",
                   },
                 },
               }}
@@ -27,7 +27,7 @@ export default function Register() {
               theme={{
                 field: {
                   input: {
-                    base: "form-gui",
+                    base: "form-gui border-2",
                   },
                 },
               }}
@@ -40,7 +40,7 @@ export default function Register() {
               theme={{
                 field: {
                   input: {
-                    base: "form-gui",
+                    base: "form-gui border-2",
                   },
                 },
               }}
@@ -52,7 +52,7 @@ export default function Register() {
               theme={{
                 field: {
                   input: {
-                    base: "form-gui",
+                    base: "form-gui border-2",
                   },
                 },
               }}
