@@ -1,7 +1,6 @@
 
 
 import ThemeOptions from "./ThemeOptions";
-import Auth from "../Auth/LogReg/LogReg";
 export default function ThemeSwitcher () {
     return (
       <div id="app">
@@ -18,7 +17,6 @@ export default function ThemeSwitcher () {
             <ThemeOptions theme="purple" bg="#AB1086" border="#000" />
             <ThemeOptions theme="orange" bg="#FD7506" border="#000" />
           </div>
-          <Auth/>
         </div>
       </div>
     );

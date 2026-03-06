@@ -12,7 +12,7 @@ export default function LogReg () {
         <div className="flex items-center justify-center cursor: pointer text-black">
             {/* makeFrom ternary for colors */}
           <Button 
-          className={`btn-style-1 m-2 card-themed ${makeForm == "signup" ? "active" : ""}`} type="button" onClick={() => 
+          className={`btn-style-1 m-2 ${makeForm == "signup" ? "active" : ""}`} type="button" onClick={() => 
             setMakeForm("signup")}>
             Register
           </Button>

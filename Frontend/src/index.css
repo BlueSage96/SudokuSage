@@ -22,7 +22,7 @@
 
   :root[data-theme="blue"]{
     --primary-background-color: rgba(24, 16, 255, 1);
-    --secondary-background-color:rgba(14, 16, 240, 1);
+    /* --secondary-background-color:rgba(14, 16, 240, 1); */
     --primary-border-color:#059bff;
     --primary-text-color:rgba(255, 255, 255, 0.87);
     --input-bg: #1e3a8a;
@@ -72,12 +72,12 @@
     transition: background-color 0.3s ease;
   }
 
-  #app {
+  /* #app {
     @apply h-full min-h-screen;
     background-color: var(--primary-background-color);
     color: var(--primary-text-color);
     transition: background-color 0.3s ease, color 0.3s ease;
-  }
+  } */
 }
 
 @layer components {
@@ -103,21 +103,26 @@
            text-[var(--primary-text-color)]
   }
 
-  .theme-options {
+.theme-options {
   @apply bg-[var(--primary-background-color)] 
           border-[var(--secondary-border-color)] 
           text-[var(--secondary-text-color)]
 }
 
+.no-theme {
+    background-color: initial !important;
+    color: initial !important;
+  }
+
   .btn-style-1 {
-     @apply border-2 border-black p-2 mb-2
+     @apply border-2 border-black p-2 mb-2 rounded-lg
   }
 
   .btn-style-1:hover {
     @apply cursor-pointer bg-blue-400
   }
    .btn-style-2 {
-     @apply border-2 border-black p-2 mt-1
+     @apply border-2 border-black p-2 mt-1 rounded-lg
   }
 
   .btn-style-2:hover {
