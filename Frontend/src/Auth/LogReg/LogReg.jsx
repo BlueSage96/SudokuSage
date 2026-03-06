@@ -10,19 +10,19 @@ export default function LogReg () {
       <>
         {/* onClick={setMakeFrom} -> would cause infinite loop */}
         <div className="flex items-center justify-center cursor: pointer text-black">
-            {/* makeFrom ternary for colors */}
-          <Button 
-          className={`btn-style-1 m-2 ${makeForm == "signup" ? "active" : ""}`} type="button" onClick={() => 
-            setMakeForm("signup")}>
-            Register
-          </Button>
-        
-          <Button color="black" className={`btn-style-1 m-2 card-themed ${makeForm == "login" ? "active" : ""}`} onClick={() => 
-            setMakeForm("login")}>Login</Button>
+          <Button
+            color="black"
+            className={`btn-style-1 m-2 card-themed ${makeForm == "signup" ? "active" : ""}`}
+            onClick={() => setMakeForm("signup")}>Register</Button>
+
+          <Button
+            color="black"
+            className={`btn-style-1 m-2 card-themed ${makeForm == "login" ? "active" : ""}`}
+            onClick={() => setMakeForm("login")}>Login</Button>
         </div>
-        
+
         {/* Below is "truthy" because of the useState init value */}
-        {makeForm === "signup" ? (<Register/>) : (<Login/>)}
+        {makeForm === "signup" ? <Register /> : <Login />}
       </>
     );
 

@@ -8,7 +8,7 @@ export default function Auth () {
 
     return (
      <>
-        <Button onClick={()=> navigate(-1)} className="btn-style-2 absolute left-[100px]">&larr; Back</Button>
+        <Button onClick={()=> navigate(-1)} className="card-themed btn-style-2 absolute left-[100px]">&larr; Back</Button>
         <ThemeSwitcher/>
          <LogReg/>   
      </>

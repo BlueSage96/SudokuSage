@@ -71,24 +71,6 @@
     background-color: var(--primary-background-color);
     transition: background-color 0.3s ease;
   }
-
-  html:not(.menu-active) {
-  background-color: var(--primary-background-color);
-  transition: background-color 0.3s ease;
-}
-
-body:not(.menu-active) {
-  @apply m-0 p-0 h-full w-full;
-  background-color: var(--primary-background-color);
-  transition: background-color 0.3s ease;
-}
-
-  /* #app {
-    @apply h-full min-h-screen;
-    background-color: var(--primary-background-color);
-    color: var(--primary-text-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
-  } */
 }
 
 @layer components {
@@ -132,6 +114,7 @@ body:not(.menu-active) {
   .btn-style-1:hover {
     @apply cursor-pointer bg-blue-400
   }
+  
    .btn-style-2 {
      @apply border-2 border-black p-2 mt-1 rounded-lg
   }
