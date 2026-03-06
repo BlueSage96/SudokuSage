@@ -9,6 +9,7 @@
       --input-bg: #f3f4f6;
       --input-text: #000;
       --input-border: #000;
+      --input-placeholder-color: #808080;
    }
 
    :root[data-theme="dark"]{
@@ -109,6 +110,11 @@
 .no-theme {
     background-color: initial !important;
     color: initial !important;
+  }
+
+  .title-style {
+    @apply text-3xl font-bold flex items-center 
+    justify-center text-black
   }
 
   .btn-style-1 {
