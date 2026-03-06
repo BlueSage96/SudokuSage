@@ -9,7 +9,7 @@ export default function LogReg () {
     return (
       <>
         {/* onClick={setMakeFrom} -> would cause infinite loop */}
-        <div className="flex items-center justify-center cursor: pointer text-black">
+        <div className="text-3xl font-bold flex items-center justify-center cursor:pointer text-black">
           <Button
             color="black"
             className={`btn-style-1 m-2 card-themed ${makeForm == "signup" ? "active" : ""}`}

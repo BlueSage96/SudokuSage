@@ -9,23 +9,23 @@
       --input-bg: #f3f4f6;
       --input-text: #000;
       --input-border: #000;
-
    }
 
    :root[data-theme="dark"]{
-    --primary-background-color: #1f2028;
+    --primary-background-color: #000;
     --secondary-background-color:#2e3039;
+    --primary-border-color:#fff;
     --primary-text-color:rgba(255, 255, 255);
-    --input-bg: #374461;
+    --input-bg: #262e3e;
     --input-text: #fff;
   }
 
   :root[data-theme="blue"]{
     --primary-background-color: rgba(24, 16, 255, 1);
-    /* --secondary-background-color:rgba(14, 16, 240, 1); */
+    --secondary-background-color:rgba(14, 16, 240, 1);
     --primary-border-color:#fff;
     --primary-text-color:rgba(255, 255, 255, 0.87);
-    --input-bg: #1e3a8a;
+    --input-bg: #094bff;
     --input-text: #fff;
   }
 
@@ -34,7 +34,7 @@
     --secondary-background-color:rgb(233, 53, 37);
     --primary-border-color:#000;
     --primary-text-color:rgba(255, 255, 255);
-    --input-bg: #991b1b;
+    --input-bg: #dc0404;
     --input-text: #fff;
   }
 
@@ -43,7 +43,7 @@
     --secondary-background-color:rgb(3, 220, 144);
     --primary-border-color:#fff;
     --primary-text-color:rgba(255, 255, 255);
-    --input-bg: #3dfa36;
+    --input-bg: #197d16;
     --input-text: #fff;
   }
 
@@ -52,7 +52,7 @@
     --secondary-background-color:rgb(194, 63, 255);
     --primary-border-color:#fff;
     --primary-text-color:rgba(255, 255, 255);
-    --input-bg: #b900bf;
+    --input-bg: #8e2791;
     --input-text: #fff;
   }
 
@@ -79,23 +79,19 @@
 
 @layer components {
    .form-gui {
-    @apply flex rounded-lg;
-    background-color: var (--input-bg);
-    border-color: var(--input-border);
-    color: var(--input-text);
-
-    background-color: var(--primary-background-color);
-    border-color:var(--primary-border-color);
+    @apply flex w-full rounded-xl px-4 text-2xl;
+    background-color: var(--input-bg);
+    border-color: var(--primary-border-color);
     color: var(--primary-text-color);
   }
 
   .form-gui::placeholder {
     color: var(--input-placeholder-color);
-   @apply text-center
+   @apply text-center;
   }
 
   .card-container {
-    @apply placeholder:text-white flex max-w-md border-2 rounded-lg p-2
+    @apply flex w-full max-w-lg border-2 rounded-xl p-4 sm:p-10;
   }
       
   .card-themed {
@@ -114,8 +110,6 @@
     background-color: initial !important;
     color: initial !important;
   }
-
-  
 
   .btn-style-1 {
      @apply border-2 p-2 mb-2 rounded-lg
