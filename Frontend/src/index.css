@@ -107,6 +107,10 @@
           text-[var(--secondary-text-color)]
 }
 
+.theme-container {
+  @apply flex absolute border-2 rounded-lg p-2.75
+}
+
 .no-theme {
     background-color: initial !important;
     color: initial !important;
@@ -114,7 +118,7 @@
 
   .title-style {
     @apply text-3xl font-bold flex items-center 
-    justify-center text-black
+    justify-center
   }
 
   .btn-style-1 {
@@ -127,11 +131,15 @@
   }
 
    .btn-style-2 {
-     @apply border-2 p-2 mt-1 rounded-lg
+     @apply border-2 p-2 rounded-lg
       border-[var(--primary-border-color)] 
   }
 
   .btn-style-2:hover {
     @apply bg-red-500 cursor-pointer
+  }
+
+  .back-style {
+    @apply border-2 p-1.75 rounded-lg text-3xl
   }
 }
