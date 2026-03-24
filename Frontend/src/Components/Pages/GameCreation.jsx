@@ -3,7 +3,7 @@ import BackButton from "../../Hooks/BackButton";
 import ThemeSwitcher from "../../Hooks/ThemeSwitcher";
 
 export default function GameCreation() {
-  // add input values as needed
+  // add input values, handler, & onChange as needed
   return (
     <>
       {/* 
