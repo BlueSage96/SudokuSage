@@ -1,5 +1,3 @@
-
-
 import ThemeOptions from "./ThemeOptions";
 export default function ThemeSwitcher ({ className = "" }) {
     return (

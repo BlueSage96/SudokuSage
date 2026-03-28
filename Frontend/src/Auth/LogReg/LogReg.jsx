@@ -5,7 +5,10 @@ import Login from "./Login";
 
 export default function LogReg () {
     const [makeForm, setMakeForm] = useState("signup");
-
+    /* 
+      refactor: colored toggle instead or along with buttons
+      OR wrap in a dive that has a color toggle overlayed on buttons
+    */
     return (
       <>
         {/* onClick={setMakeFrom} -> would cause infinite loop */}

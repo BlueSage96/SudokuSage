@@ -101,45 +101,49 @@
            text-[var(--primary-text-color)]
   }
 
-.theme-options {
-  @apply bg-[var(--primary-background-color)] 
-          border-[var(--primary-border-color)] 
-          text-[var(--secondary-text-color)]
-}
-
-.theme-container {
-  @apply flex absolute border-2 rounded-lg p-2.75
-}
-
-.no-theme {
-    background-color: initial !important;
-    color: initial !important;
+  .theme-options {
+    @apply bg-[var(--primary-background-color)] 
+            border-[var(--primary-border-color)] 
+            text-[var(--secondary-text-color)]
   }
 
-  .title-style {
-    @apply text-3xl font-bold flex items-center 
-    justify-center
+  .theme-container {
+    @apply flex absolute border-2 rounded-lg p-2.75
   }
 
-  .btn-style-1 {
-     @apply border-2 p-2 mb-2 rounded-lg
-      border-[var(--primary-border-color)] 
-  }
+  .no-theme {
+      background-color: initial !important;
+      color: initial !important;
+    }
 
-  .btn-style-1:hover {
-    @apply cursor-pointer bg-blue-400
-  }
+    .title-style {
+      @apply text-3xl font-bold flex items-center 
+      justify-center
+    }
+
+    .btn-style-1 {
+      @apply border-2 p-2 mb-2 rounded-lg
+        border-[var(--primary-border-color)] 
+    }
+
+    .btn-style-1:hover {
+      @apply cursor-pointer bg-blue-400
+    }
 
    .btn-style-2 {
      @apply border-2 p-2 rounded-lg
       border-[var(--primary-border-color)] 
-  }
+    }
 
-  .btn-style-2:hover {
-    @apply bg-red-500 cursor-pointer
-  }
+    .btn-style-2:hover {
+      @apply bg-red-500 cursor-pointer
+    }
 
-  .back-style {
-    @apply border-2 p-1.75 rounded-lg text-3xl
-  }
+    .select-style {
+      @apply w-12 rounded-lg border-2
+    }
+
+    .back-style {
+      @apply border-2 p-6 rounded-lg text-3xl
+    }
 }

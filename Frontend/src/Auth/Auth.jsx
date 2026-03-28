@@ -5,8 +5,8 @@ import BackButton from "../Hooks/BackButton";
 export default function Auth () {
     return (
       <>
-        <BackButton className="flex absolute left-[250px] top-[40px]"/>
-        <ThemeSwitcher className="top-[40px] left-[400px]"/>
+        <BackButton className="flex absolute left-[450px] top-[40px]"/>
+        <ThemeSwitcher className="top-[40px] right-[400px]"/>
         <LogReg/>
       </>
     );
