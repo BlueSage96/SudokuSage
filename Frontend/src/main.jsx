@@ -10,8 +10,8 @@ import "./index.css";
 import App from "./App.jsx";
 import Menu from "./Components/Pages/Menu";
 import Auth from "./Auth/Auth";
-import GameCreation from "./Components/Pages/GameCreation";
-import Dashboard from "./Components/Pages/Dashboard";
+import GameCreation from "./Components/Games/GameCreation";
+import Dashboard from "./Components/Dashboard/Dashboard";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
