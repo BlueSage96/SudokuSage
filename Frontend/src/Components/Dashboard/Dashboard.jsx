@@ -1,4 +1,3 @@
-import { Card, Button } from "flowbite-react";
 import BackButton from "../../Hooks/BackButton";
 import ThemeSwitcher from "../../Hooks/ThemeSwitcher";
 import Header from "./Header";
@@ -13,14 +12,12 @@ export default function Dashboard () {
         card-themed">
           <div className="flex w-full items-center justify-between gap-4">
             <BackButton className="!relative top-[73px] left-[150px]" />
-            {/* Add ! relative back? */}
             <ThemeSwitcher className="!relative top-[65px] right-[100px]" />
           </div>
 
           <div
             className="card-container flex flex-col items-center 
-            justify-center gap-20 border-2 px-2 py-8 rounded-xl"
-          >
+            justify-center gap-20 border-2 px-2 py-8 rounded-xl">
             <Header/>
 
             <div className="flex flex-row gap-6">
