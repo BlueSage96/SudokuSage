@@ -9,15 +9,16 @@ import Games from "../Games/GamesList";
 export default function Dashboard () {
     return (
       <>
-        <div className="flex w-full flex-col gap-2 items-center font-bold">
+        <div className="flex w-full flex-col gap-2 items-center font-bold
+        card-themed">
           <div className="flex w-full items-center justify-between gap-4">
-            <BackButton className="text-xl !relative top-[65px] left-[150px]" />
+            <BackButton className="!relative top-[73px] left-[150px]" />
             {/* Add ! relative back? */}
             <ThemeSwitcher className="!relative top-[65px] right-[100px]" />
           </div>
 
           <div
-            className="card-container card-themed flex flex-col items-center 
+            className="card-container flex flex-col items-center 
             justify-center gap-20 border-2 px-2 py-8 rounded-xl"
           >
             <Header/>

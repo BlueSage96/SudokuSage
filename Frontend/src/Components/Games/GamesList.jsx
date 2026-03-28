@@ -7,13 +7,13 @@ export default function GamesList () {
             <div className="flex gap-12">
               <Button className="select-style"></Button>
               <h1>Games</h1>
-              <Button className="btn-style-1">+New</Button>
+              <Button className="btn-style-3">+New</Button>
             </div>
 
             <div className="flex gap-12">
               <Button className="select-style"></Button>
               <h1>Game 1</h1>
-              <Button className="btn-style-1">Edit</Button>
+              <Button className="btn-style-3">Edit</Button>
             </div>
           </Card>
         </div>

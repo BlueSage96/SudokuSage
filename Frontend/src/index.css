@@ -139,11 +139,20 @@
       @apply bg-red-500 cursor-pointer
     }
 
+    .btn-style-3 {
+      @apply border-2 p-2 mb-2 rounded-lg
+    }
+
+    .btn-style-3:hover {
+      @apply cursor-pointer bg-blue-400
+    }
+
+
     .select-style {
       @apply w-12 rounded-lg border-2
     }
 
     .back-style {
-      @apply border-2 p-6 rounded-lg text-3xl
+      @apply border-2 p-3 rounded-lg text-3xl
     }
 }
