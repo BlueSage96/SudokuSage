@@ -1,5 +1,7 @@
 Frontend:
 
+Modals for: stats, scores/leaderboard, creating new games and editing existing ones
+
 *Check with Claude or GPT if I need these files
 
 GameApi 
@@ -14,6 +16,7 @@ GameForm --> handle all states --> selections such as difficulty and keeps track
 
 Start with one file if I need to
 Refer to layers comment from mentor Dan
+
 GameContext --> context layer --> imports useGame & gameContext --> refer to useContext themes project
 
 GameService --> hook layer --> state + side effects

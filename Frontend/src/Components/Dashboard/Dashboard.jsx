@@ -17,7 +17,7 @@ export default function Dashboard () {
 
           <div
             className="card-container flex flex-col items-center 
-            justify-center gap-20 border-2 px-2 py-8 rounded-xl">
+            justify-center gap-10 border-2 px-2 py-8 rounded-xl">
             <Header/>
 
             <div className="flex flex-row gap-6">
