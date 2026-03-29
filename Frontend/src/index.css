@@ -1,71 +1,71 @@
 @import "tailwindcss";
 
 @layer base {
-   :root {
-      /* Default theme */
-      --primary-background-color: #fff;
-      --secondary-background-color:#f7f7f7;
-      --primary-text-color:#000;
-      --input-bg: #f3f4f6;
-      --input-text: #000;
-      --input-border: #000;
-      --input-placeholder-color: #808080;
-   }
+  :root {
+    /* Default theme */
+    --primary-background-color: #fff;
+    --secondary-background-color: #f7f7f7;
+    --primary-text-color: #000;
+    --input-bg: #f3f4f6;
+    --input-text: #000;
+    --input-border: #000;
+    --input-placeholder-color: #808080;
+  }
 
-   :root[data-theme="dark"]{
+  :root[data-theme="dark"] {
     --primary-background-color: #000;
-    --secondary-background-color:#2e3039;
-    --primary-border-color:#fff;
-    --primary-text-color:rgba(255, 255, 255);
+    --secondary-background-color: #2e3039;
+    --primary-border-color: #fff;
+    --primary-text-color: rgba(255, 255, 255);
     --input-bg: #262e3e;
     --input-text: #fff;
   }
 
-  :root[data-theme="blue"]{
+  :root[data-theme="blue"] {
     --primary-background-color: rgba(24, 16, 255, 1);
-    --secondary-background-color:rgba(14, 16, 240, 1);
-    --primary-border-color:#fff;
-    --primary-text-color:rgba(255, 255, 255, 0.87);
+    --secondary-background-color: rgba(14, 16, 240, 1);
+    --primary-border-color: #fff;
+    --primary-text-color: rgba(255, 255, 255, 0.87);
     --input-bg: #094bff;
     --input-text: #fff;
   }
 
-  :root[data-theme="red"]{
+  :root[data-theme="red"] {
     --primary-background-color: rgba(255, 0, 0, 1);
-    --secondary-background-color:rgb(233, 53, 37);
-    --primary-border-color:#000;
-    --primary-text-color:rgba(255, 255, 255);
+    --secondary-background-color: rgb(233, 53, 37);
+    --primary-border-color: #000;
+    --primary-text-color: rgba(255, 255, 255);
     --input-bg: #dc0404;
     --input-text: #fff;
   }
 
-  :root[data-theme="green"]{
+  :root[data-theme="green"] {
     --primary-background-color: rgb(0, 87, 29);
-    --secondary-background-color:rgb(3, 220, 144);
-    --primary-border-color:#fff;
-    --primary-text-color:rgba(255, 255, 255);
+    --secondary-background-color: rgb(3, 220, 144);
+    --primary-border-color: #fff;
+    --primary-text-color: rgba(255, 255, 255);
     --input-bg: #197d16;
     --input-text: #fff;
   }
 
-  :root[data-theme="purple"]{
+  :root[data-theme="purple"] {
     --primary-background-color: rgb(126, 0, 138);
-    --secondary-background-color:rgb(194, 63, 255);
-    --primary-border-color:#fff;
-    --primary-text-color:rgba(255, 255, 255);
+    --secondary-background-color: rgb(194, 63, 255);
+    --primary-border-color: #fff;
+    --primary-text-color: rgba(255, 255, 255);
     --input-bg: #8e2791;
     --input-text: #fff;
   }
 
-    :root[data-theme="orange"]{
+  :root[data-theme="orange"] {
     --primary-background-color: rgb(255, 85, 0);
-    --secondary-background-color:rgb(251, 130, 0);
-    --primary-border-color:#000;
-    --primary-text-color:rgba(255, 255, 255);
+    --secondary-background-color: rgb(251, 130, 0);
+    --primary-border-color: #000;
+    --primary-text-color: rgba(255, 255, 255);
     --input-bg: #ff852f;
     --input-text: #fff;
   }
-  
+
   html {
     background-color: var(--primary-background-color);
     transition: background-color 0.3s ease;
@@ -79,7 +79,7 @@
 }
 
 @layer components {
-   .form-gui {
+  .form-gui {
     @apply flex w-full rounded-xl px-4 text-2xl;
     background-color: var(--input-bg);
     border-color: var(--primary-border-color);
@@ -88,71 +88,78 @@
 
   .form-gui::placeholder {
     color: var(--input-placeholder-color);
-   @apply text-center;
+    @apply text-center;
   }
 
   .card-container {
     @apply flex w-full max-w-lg border-2 rounded-xl p-4 sm:p-10;
   }
-      
+
   .card-themed {
     @apply bg-[var(--primary-background-color)] 
            border-[var(--primary-border-color)] 
-           text-[var(--primary-text-color)]
+           text-[var(--primary-text-color)];
   }
 
   .theme-options {
     @apply bg-[var(--primary-background-color)] 
             border-[var(--primary-border-color)] 
-            text-[var(--secondary-text-color)]
+            text-[var(--secondary-text-color)];
   }
 
   .theme-container {
-    @apply flex absolute border-2 rounded-lg p-2.75
+    @apply flex absolute border-2 rounded-lg p-2.75;
   }
 
   .no-theme {
-      background-color: initial !important;
-      color: initial !important;
-    }
+    background-color: initial !important;
+    color: initial !important;
+  }
 
-    .title-style {
-      @apply text-3xl font-bold flex items-center 
-      justify-center
-    }
+  .title-style {
+    @apply text-3xl font-bold flex items-center 
+      justify-center;
+  }
 
-    .btn-style-1 {
-      @apply border-2 p-2 mb-2 rounded-lg
-        border-[var(--primary-border-color)] 
-    }
+  .btn-style-1 {
+    @apply border-2 p-2 mb-2 rounded-lg
+        border-[var(--primary-border-color)];
+  }
 
-    .btn-style-1:hover {
-      @apply cursor-pointer bg-blue-400
-    }
+  .btn-style-1:hover {
+    @apply cursor-pointer bg-blue-400;
+  }
 
-   .btn-style-2 {
-     @apply border-2 p-2 rounded-lg
-      border-[var(--primary-border-color)] 
-    }
+  .btn-style-2 {
+    @apply border-2 p-2 rounded-lg
+      border-[var(--primary-border-color)];
+  }
 
-    .btn-style-2:hover {
-      @apply bg-red-500 cursor-pointer
-    }
+  .btn-style-2:hover {
+    @apply bg-red-500 cursor-pointer;
+  }
 
-    .btn-style-3 {
-      @apply border-2 p-2 mb-2 rounded-lg
-    }
+  .btn-style-3 {
+    @apply border-2 p-1 rounded-lg text-lg;
+  }
 
-    .btn-style-3:hover {
-      @apply cursor-pointer bg-blue-400
-    }
+  .btn-style-3:hover {
+    @apply cursor-pointer bg-blue-400;
+  }
 
+  .select-style {
+    @apply appearance-none w-6 h-6 border-2 rounded bg-[var(--primary-background-color)];
+  }
 
-    .select-style {
-      @apply w-12 rounded-lg border-2
-    }
+  .check-style {
+    @apply absolute top-[-5px] left-[-3px] w-8 h-8 p-1 text-blue-500 opacity-0 peer-checked:opacity-100 cursor-pointer
+  }
 
-    .back-style {
-      @apply border-2 p-3 rounded-lg text-3xl
-    }
+  /* .select-style:checked {
+    @apply bg-blue-700;
+  } */
+
+  .back-style {
+    @apply border-2 p-3 rounded-lg text-3xl;
+  }
 }
