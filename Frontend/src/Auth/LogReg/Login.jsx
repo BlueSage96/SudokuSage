@@ -1,5 +1,6 @@
 import { Card, TextInput, Label, Button } from "flowbite-react";
 export default function Login () {
+  // add input values, handlers, and onChange as needed
   return (
     <div className="flex items-center justify-center px-2 py-8">
 
