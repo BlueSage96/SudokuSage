@@ -171,12 +171,12 @@
   } */
 
   .forgot-pwd {
-    @apply !relative cursor-pointer
+    @apply !relative cursor-pointer text-[var(--tertiary-text-color)]
   }
 
-  .forgot-pwd:hover {
-    @apply text-[var(--secondary-text-color)]
-  }
+  /* .forgot-pwd:hover {
+    @apply 
+  } */
 
   .back-style {
     @apply border-2 p-3 rounded-lg text-3xl;

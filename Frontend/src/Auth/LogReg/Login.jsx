@@ -55,7 +55,7 @@ export default function Login () {
                 <Label htmlFor="remember" className="!relative left-[10px] bottom-[5px]">Remember me</Label>
               </div>
             </label>
-             <a className=" forgot-pwd">Forgot Password?</a>
+             <a className="forgot-pwd">Forgot Password?</a>
           </div>
          
           <Button className="btn-style-2 w-full py-4 text-3xl font-semibold">
